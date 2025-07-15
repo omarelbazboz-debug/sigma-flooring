@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use File;
-use Image;
+use App\Helpers\SaveImageTo3Path;
+
 use App\Models\AlbumItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class AlbumItemController extends Controller
@@ -25,29 +26,21 @@ class AlbumItemController extends Controller
 
             $file = $request->file("file");
             $realName = $file->getClientOriginalName();
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111111, 99999999) . '.' . $extension; // renameing image
-            
-            $path = public_path('uploads/album_items/source/' . $fileName);
-            
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('album_items');
 
             DB::table('temp_upload_files')->insert(['server_name' => $fileName,'original_name' => $realName , 'type'=>'album_items']);
-            if(\Session::has('imagesUpload')){
-                \Session::push('imagesUpload',$fileName);
-                \Session::push('imagesUploadRealName',$realName);
+            if(Session::has('imagesUpload')){
+                Session::push('imagesUpload',$fileName);
+                Session::push('imagesUploadRealName',$realName);
             }else{
                 $images = [];
                 array_push($images,$fileName);
-                \Session::put('imagesUpload',$images);
+                Session::put('imagesUpload',$images);
                 
                 $realImages = [];
                 array_push($realImages,$realName);
-                \Session::put('imagesUploadRealName',$realImages);
+                Session::put('imagesUploadRealName',$realImages);
             }
         }
     }
@@ -55,18 +48,16 @@ class AlbumItemController extends Controller
     ///////// delete uploaded images///////////
     public function removeUploadImages(Request $request){
         $name = $request->name;
-        $names = \Session::get('imagesUploadRealName');
-        $images = \Session::get('imagesUpload');
+        $names = Session::get('imagesUploadRealName');
+        $images = Session::get('imagesUpload');
         $key = array_search($name, $names);
         
-        $img_path = public_path() . '/uploads/album_items/source/';
-
-        unlink(sprintf($img_path . '%s', $images[$key]));
+        SaveImageTo3Path::deleteImage(  $name, 'album_items');
               
         unset($images[$key]);
         unset($names[$key]);
-        \Session::put('imagesUpload',$images);
-        \Session::put('imagesUploadRealName',$names);
+        Session::put('imagesUpload',$images);
+        Session::put('imagesUploadRealName',$names);
         DB::table('temp_upload_files')->where('original_name',$name)->delete();
     }
     

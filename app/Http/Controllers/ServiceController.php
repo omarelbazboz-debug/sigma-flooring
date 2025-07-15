@@ -76,26 +76,25 @@ class ServiceController extends Controller
         $add->home = $request->home;
         $add->menu = $request->menu;
         $add->parent_id = $request->parent_id ?? 0;
-
-        if ($request->hasFile("img")) {
+        if ( $request->hasFile("img")) {
             $file = $request->file("img");
-           $saveImage = new SaveImageTo3Path($file,true);
+            $saveImage = new SaveImageTo3Path($file,true);
             $fileName = $saveImage->saveImages('services');
             $add->img = $fileName;
         }
-        if ($request->hasFile("icon")) {
 
-           $file = $request->file("icon");
-           $saveImage = new SaveImageTo3Path($file,true);
-            $fileName = $saveImage->saveImages('services');
-            $add->icon = $fileName;
-        }
-
-        if ($request->hasFile("banner")) {
-           $file = $request->file("banner");
-           $saveImage = new SaveImageTo3Path($file,true);
+        if ( $request->hasFile("banner")) {
+            $file = $request->file("banner");
+            $saveImage = new SaveImageTo3Path($file,true);
             $fileName = $saveImage->saveImages('services');
             $add->banner = $fileName;
+        }
+
+        if ( $request->hasFile("icon")) {
+            $file = $request->file("icon");
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('services');
+            $add->icon = $fileName;
         }
         if ($request->file('file')) {
             $fileName = time() . '_' . $request->file('file')->getClientOriginalName();
@@ -192,12 +191,28 @@ class ServiceController extends Controller
         $add->menu = $request->menu;
         $add->parent_id = $request->parent_id ?? 0;
 
-        if ($request->hasFile("img")) {
+        if ( $request->hasFile("img")) {
             $file = $request->file("img");
             $saveImage = new SaveImageTo3Path($file,true);
             $fileName = $saveImage->saveImages('services');
             SaveImageTo3Path::deleteImage(  $add->img, 'services');
             $add->img = $fileName;
+        }
+
+        if ( $request->hasFile("banner")) {
+            $file = $request->file("banner");
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('services');
+            SaveImageTo3Path::deleteImage(  $add->banner, 'services');
+            $add->banner = $fileName;
+        }
+
+        if ( $request->hasFile("icon")) {
+            $file = $request->file("icon");
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('services');
+            SaveImageTo3Path::deleteImage(  $add->icon, 'services');
+            $add->icon = $fileName;
         }
 
         if ($request->hasFile("file")) {
@@ -216,21 +231,7 @@ class ServiceController extends Controller
             $add->file = $fileName;
         }
 
-        if ($request->hasFile("icon")) {
-             $file = $request->file("icon");
-            $saveImage = new SaveImageTo3Path($file,true);
-            $fileName = $saveImage->saveImages('services');
-            SaveImageTo3Path::deleteImage(  $add->icon, 'services');
-            $add->icon = $fileName;
-        }
-
-        if ($request->hasFile("banner")) {
-            $file = $request->file("banner");
-            $saveImage = new SaveImageTo3Path($file,true);
-            $fileName = $saveImage->saveImages('services');
-            SaveImageTo3Path::deleteImage(  $add->banner, 'services');
-            $add->banner = $fileName;
-        }
+    
 
         $add->save();
 

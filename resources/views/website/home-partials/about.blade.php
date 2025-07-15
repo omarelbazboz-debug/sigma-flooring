@@ -16,11 +16,12 @@
                     {{ $about->title }}
                 </h2>
                 <p class="text-muted mb-4 lh-lg">
-                    {!! $about->text !!}
+                    {{Helper::removeTagsAndCutText($about->text , 500)}}
+                  
                 </p>
 
 
-                <a href="./about.html" class="btn btn-send px-4 py-2">
+                <a href="{{Helper::AppUrl('about-us')}}" class="btn btn-send px-4 py-2">
                     @lang('home.View About Us')
                 </a>
             </div>

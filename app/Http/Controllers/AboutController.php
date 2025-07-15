@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\About;
@@ -17,11 +18,7 @@ class AboutController extends Controller
         $this->middleware('permission:about');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function editAbout()
     {
         $about = About::first();
@@ -42,65 +39,27 @@ class AboutController extends Controller
         $add->alt_img = $request->alt_img;
         $add->alt_banner = $request->alt_banner;
 
-        if ($request->hasFile("image")) {
-
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/aboutStrucs/source/';
-            if ($add->image != null) {
-                file_exists($img_path . $add->image) ? unlink($img_path . $add->image) : '';
-            }
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/aboutStrucs/source/' . $fileName);
-            //  $file->move($destinationPath, $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
-
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('aboutStrucs');
+            SaveImageTo3Path::deleteImage(  $add->image, 'aboutStrucs');
             $add->image = $fileName;
         }
         if ($request->hasFile("img")) {
 
             $file = $request->file("img");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/aboutStrucs/source/';
-            if ($add->img != null) {
-                file_exists($img_path . $add->img) ? unlink($img_path . $add->img) : '';
-            }
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing img
-            $path = public_path('uploads/aboutStrucs/source/' . $fileName);
-            //  $file->move($destinationPath, $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
-
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('img');
+            SaveImageTo3Path::deleteImage(  $add->img, 'aboutStrucs');
             $add->img = $fileName;
         }
         if ($request->hasFile("banner")) {
 
             $file = $request->file("banner");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/aboutStrucs/source/';
-            if ($add->banner != null) {
-                file_exists($img_path . $add->banner) ? unlink($img_path . $add->banner) : '';
-            }
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/aboutStrucs/source/' . $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('aboutStrucs');
+            SaveImageTo3Path::deleteImage(  $add->banner, 'aboutStrucs');
             $add->banner = $fileName;
         }
         $add->save();

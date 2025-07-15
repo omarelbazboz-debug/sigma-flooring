@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BlogItem;
@@ -20,11 +21,7 @@ class BlogItemController extends Controller
     {
         $this->middleware('permission:blogItem');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
@@ -32,11 +29,7 @@ class BlogItemController extends Controller
         return view('admin.blogItems.blogItems',compact('blogItems'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
@@ -44,12 +37,7 @@ class BlogItemController extends Controller
         return view('admin.blogItems.addBlogItem',compact('blogCategories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         // التحقق من صحة البيانات
@@ -99,19 +87,17 @@ class BlogItemController extends Controller
         $blogitem->meta_desc_ar = $request->meta_desc_ar;
         $blogitem->meta_robots = $request->meta_robots;
 
-        if ($request->hasFile("image")) {
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = public_path('uploads/blogitems/source/' . $fileName);
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('blogitems');
             $blogitem->image = $fileName;
         }
 
-        if ($request->hasFile("banner")) {
+        if ( $request->hasFile("banner")) {
             $file = $request->file("banner");
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = public_path('uploads/blogitems/source/' . $fileName);
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('blogitems');
             $blogitem->banner = $fileName;
         }
 
@@ -164,23 +150,9 @@ class BlogItemController extends Controller
         return redirect()->route('blog-items.index')->with('success', trans('home.your_item_added_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function edit($id)
     {
         //
@@ -195,13 +167,7 @@ class BlogItemController extends Controller
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         // التحقق من صحة البيانات
@@ -251,42 +217,19 @@ class BlogItemController extends Controller
         $blogitem->meta_desc_en =$request->meta_desc_en;
         $blogitem->meta_desc_ar =$request->meta_desc_ar;
         $blogitem->meta_robots =$request->meta_robots;
-        if ($request->hasFile("image")) {
-
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/blogitems/source/';
-
-            if ($blogitem->image != null) {
-                file_exists($img_path.$blogitem->image) ? unlink(sprintf($img_path . '%s', $blogitem->image)):'';
-            }
-           // $destinationPath = public_path() . '/uploads/'; // upload path   
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/blogitems/source/' . $fileName);
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('blogitems');
+            SaveImageTo3Path::deleteImage(  $blogitem->image, 'blogitems');
             $blogitem->image = $fileName;
         }
-        if ($request->hasFile("banner")) {
 
+        if ( $request->hasFile("banner")) {
             $file = $request->file("banner");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/blogitems/source/';
-
-            if ($blogitem->banner != null) {
-                file_exists($img_path.$blogitem->banner) ? unlink(sprintf($img_path . '%s', $blogitem->banner)):'';
-            }
-           // $destinationPath = public_path() . '/uploads/'; // upload path   
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/blogitems/source/' . $fileName);
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('blogitems');
+            SaveImageTo3Path::deleteImage(  $blogitem->banner, 'blogitems');
             $blogitem->banner = $fileName;
         }
         $blogitem->save();

@@ -117,3 +117,42 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
+
+
+
+let started = false; // لضمان العد مرة واحدة فقط
+
+const counters = document.querySelectorAll(".counter");
+const section = document.querySelector(".stats");
+
+const startCounting = () => {
+  counters.forEach(counter => {
+    let count = 0;
+    const target = +counter.dataset.target;
+    const duration = 2000; // المدة الكاملة للعد (بالملي ثانية)
+    const intervalTime = 20; // الوقت بين كل خطوة (كل 20 مللي ثانية)
+    const steps = Math.floor(duration / intervalTime);
+    const increment = Math.ceil(target / steps);
+
+    const interval = setInterval(() => {
+      count += increment;
+      if (count >= target) {
+        counter.textContent = ` ${target} +`;
+        clearInterval(interval);
+      } else {
+        counter.textContent = ` ${count} +`;
+      }
+    }, intervalTime);
+  });
+};
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !started) {
+      startCounting();
+      started = true;
+    }
+  });
+}, { threshold: 0.5 });
+
+observer.observe(section);

@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use App\Models\Progress;
-use DB;
-use File;
-use Image;
+
 use App\Models\ProgressApplication;
 use Illuminate\Http\Request;
 
 class ProgressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
 
     public function __construct(){
-        $this->middleware(['permission:progresses']);
+        $this->middleware(['permission:progress']);
     }
 
     public function index()
@@ -28,23 +23,14 @@ class ProgressController extends Controller
         return view('admin.progresses.progresses',compact('progresses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
         return view('admin.progresses.addprogress');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $add = new progress();
@@ -57,44 +43,22 @@ class ProgressController extends Controller
         $add->status = $request->status;
 
 
-        if ($request->hasFile("image")) {
-
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/progress/source/';
-            if ($add->image != null) {
-                file_exists($img_path.$add->image) ? unlink($img_path.$add->image):'';
-            }
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/progress/source/' . $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('progress');
             $add->image = $fileName;
         }
         $add->save();
         return redirect('admin/progresses')->with('success',trans('home.your_item_added_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $progress =Progress::find($id);
@@ -104,13 +68,7 @@ class ProgressController extends Controller
             abort('404');
         }
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $add = Progress::find($id);
@@ -121,31 +79,18 @@ class ProgressController extends Controller
         $add->number = $request->number;
         $add->order = $request->order;
         $add->status = $request->status;
-if ($request->hasFile("image")) {
-            $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-            $img_path = public_path() . '/uploads/progress/source/';
-            if ($add->image != null) {
-                file_exists($img_path.$add->image) ? unlink($img_path.$add->image):'';
-            }
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/progress/source/' . $fileName);
-            
-            Image::make($file->getRealPath())->save($path);
 
+        if ( $request->hasFile("image")) {
+            $file = $request->file("image");
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('progress');
+            SaveImageTo3Path::deleteImage(  $add->image, 'progress');
             $add->image = $fileName;
         }
         $add->save();
         return redirect('/admin/progresses')->with('success',trans('home.your_item_updated_successfully'));
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($ids){
         //
         $ids = explode(',', $ids);

@@ -8,7 +8,6 @@ return [
 
         'ar'          => ['name' => 'Arabic',                 'script' => 'Arab', 'native' => 'العربية', 'regional' => 'ar_eg'],
         'en'          => ['name' => 'English',                'script' => 'Latn', 'native' => 'English', 'regional' => 'en_eg'],
-
     ],
 
     // Requires middleware `LaravelSessionRedirect.php`.

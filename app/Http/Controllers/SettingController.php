@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use Illuminate\Support\Facades\File;
@@ -56,25 +57,11 @@ class SettingController extends Controller
         $settings->copyright = $request->copyright;
         $settings->publish_gtm_script = $request->publish_gtm_script;
         $settings->publish_contact_modal = $request->publish_contact_modal;
-        if ($request->hasFile("contact_image")) {
-
+        if ( $request->hasFile("contact_image")) {
             $file = $request->file("contact_image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/settings/source/';
-            if ($settings->contact_image != null) {
-                file_exists($img_path.$settings->contact_image) ? unlink($img_path .$settings->contact_image):'';
-
-            }
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/settings/source/' . $fileName);
-            //  $file->move($destinationPath, $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('settings');
+            SaveImageTo3Path::deleteImage(  $settings->contact_image, 'settings');
             $settings->contact_image = $fileName;
         }
 

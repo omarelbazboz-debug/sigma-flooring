@@ -934,3 +934,76 @@ footer .links li a {
 footer .links li a:hover {
   color: var(--second-color);
 }
+
+/* counter section */
+
+.experience-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../images/close-up-details-wood-surface.webp") center/cover;
+  background-attachment: fixed;
+  padding: 100px 20px;
+  color: white;
+  text-align: center;
+}
+
+.experience-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.experience-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.experience-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.first-count .expertise-highlights {
+  width: fit-content;
+}
+
+.count .expertise-highlights {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(5px);
+}
+.count .expertise-highlights .user-count span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.expertise-highlights {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.expertise-highlights .expertise-highlights-item {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(5px);
+}
+
+@media (max-width: 600px) {
+  .experience-content h2 {
+    font-size: 1.8rem;
+  }
+  .expertise-highlights {
+    gap: 10px;
+  }
+}

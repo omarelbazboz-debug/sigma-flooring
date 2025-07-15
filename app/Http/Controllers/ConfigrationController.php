@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use Illuminate\Http\Request;
 use App\Models\Configration;
 use File;
@@ -12,12 +13,7 @@ class ConfigrationController extends Controller
     public function __construct(){
         $this->middleware(['permission:configration']);
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($lang)
     {
         //
@@ -37,95 +33,35 @@ class ConfigrationController extends Controller
         $configration -> copy_rights_text = $request -> copy_rights_text;
 
         
-        if ($request->hasFile("app_logo")) {
-
+        if ( $request->hasFile("app_logo")) {
             $file = $request->file("app_logo");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/settings/source/';
-
-            if ($configration->app_logo != null) {
-                file_exists($img_path. $configration->app_logo) ? unlink($img_path . $configration->app_logo):'';
-            }
-
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/settings/source/' . $fileName);
-            //  $file->move($destinationPath, $fileName);
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('settings');
+            SaveImageTo3Path::deleteImage(   $configration->app_logo, 'settings');
             $configration->app_logo = $fileName;
         }
         
-        if ($request->hasFile("about_image")) {
-
+        if ( $request->hasFile("about_image")) {
             $file = $request->file("about_image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/settings/source/';
-
-            if ($configration->about_image != null) {
-                file_exists($img_path. $configration->about_image) ? unlink($img_path . $configration->about_image):'';
-            }
-
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/settings/source/' . $fileName);
-            //  $file->move($destinationPath, $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('settings');
+            SaveImageTo3Path::deleteImage(   $configration->about_image, 'settings');
             $configration->about_image = $fileName;
         }
         
-        if ($request->hasFile("footer_logo")) {
-
+        if ( $request->hasFile("footer_logo")) {
             $file = $request->file("footer_logo");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/settings/source/';
-             
-             
-
-            if ($configration->footer_logo != null) {
-                file_exists($img_path. $configration->footer_logo) ? unlink($img_path . $configration->footer_logo):'';
-            }
-
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/settings/source/' . $fileName);
-            //  $file->move($destinationPath, $fileName);
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('settings');
+            SaveImageTo3Path::deleteImage(   $configration->footer_logo, 'settings');
             $configration->footer_logo = $fileName;
         }
         
-        if ($request->hasFile("fav_icon")) {
-
+        if ( $request->hasFile("fav_icon")) {
             $file = $request->file("fav_icon");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path() . '/uploads/settings/source/';
-             
-             
-
-            if ($configration->fav_icon != null) {
-                file_exists($img_path. $configration->fav_icon) ? unlink($img_path . $configration->fav_icon):'';
-            }
-
-            // $destinationPath = public_path() . '/uploads/'; // upload path
-            $extension = $mimearr[1]; // getting file extension
-            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
-            $path = public_path('uploads/settings/source/' . $fileName);
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('settings');
+            SaveImageTo3Path::deleteImage(   $configration->fav_icon, 'settings');
             $configration->fav_icon = $fileName;
         }
         

@@ -1,65 +1,48 @@
-<!--============================== BlogDetails Start ==============================-->
-<section class="news-details">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-8 col-lg-7">
-                <div class="news-details__left">
-                    <div class="news-details__img">
-                        <img src="{{ $blog->image }}" alt="blog->image">
-                    </div>
-                    <div class="news-details__content">
-                        <ul class="list-unstyled news-details__meta">
-                            <li><i class="far fa-calendar"></i> {{ $blog->date }}
-                            </li>
-                        </ul>
-                        <h1 class="news-details__title">{{ $blog->title }}</h1>
-                        <p class="news-details__text-1">{!! $blog->text !!}</p>
-                        @foreach ($faqs as $i => $faq)
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <h2 class="mb-0">
-                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-0" aria-expanded="true" aria-controls="collapseOne">
-                                                       {{ app()->getLocale() == 'ar' ? $faq->title_ar ?? ($faq->question ?? ($faq->title ?? '')) : $faq->title_en ?? ($faq->question ?? ($faq->title ?? '')) }}
-                                                    </button>
-                                                </h2>
-                                            </div>
-                                    
-                                            <div id="collapse-0" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    <p>{!! app()->getLocale() == 'ar'
-                                            ? $faq->text_ar ?? ($faq->answer ?? ($faq->text ?? ''))
-                                            : $faq->text_en ?? ($faq->answer ?? ($faq->text ?? '')) !!}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
+
+<!--============================== BlogDetails End ==============================-->
+<section class="article-section py-5 bg-light">
+        <div class="container py-5">
+            <div class="row g-4">
+                <!-- المحتوى الرئيسي -->
+                <div class="col-lg-8">
+                    <div class="mb-4 wow fadeInUp" data-wow-delay="0.1s">
+                        <img src="{{ $blog->image }}" alt="HDF System Architecture" class="img-fluid rounded shadow">
                     </div>
 
+                    <div class="text-dark lh-lg fw-medium wow fadeInUp" data-wow-delay="0.2s">
+                       {!! $blog->text !!}
+                    </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-lg-5">
-                <div class="sidebar">
 
-                    <div class="sidebar__single sidebar__post">
-                        <h3 class="sidebar__title">{{ trans('home.blogs') }}</h3>
-                        <ul class="sidebar__post-list list-unstyled">
-                            @foreach ($blogs as $relatedBlog)
-                                <li>
-                                    <div class="sidebar__post-image">
-                                        <img src="{{ $relatedBlog->image }}" alt="relatedBlog">
+                <!-- القائمة الجانبية -->
+                <div class="col-lg-4">
+                    <div class="bg-white p-4 rounded shadow-sm wow fadeInRight" data-wow-delay="0.3s">
+                        <h3 class="mb-4 fw-bold border-bottom pb-2 wow fadeInRight" data-wow-delay="0.4s">Related Articles</h3>
+
+                        <div class="related-articles">
+                             @foreach ($blogs as $relatedBlog)
+                            <!-- Article Item 1 -->
+                            <div class="d-flex mb-4 pb-2 border-bottom wow fadeInRight" data-wow-delay="0.5s">
+                                <div class="flex-shrink-0">
+                                    <img src="{{ $relatedBlog->image }}" alt="HDF Architecture"
+                                        class="rounded me-3" width="80" height="80">
+                                </div>
+                                <div class="flex-grow-1 d-grid justify-content-between">
+                                    <h5 class="mb-2">
+                                        <a href="{{ $relatedBlog->link }}"
+                                            class="text-dark text-decoration-none fw-semibold fs-6">
+                                            {{ $relatedBlog->title }}
+                                        </a>
+                                    </h5>
+                                    <div class="text-muted small">
+                                        <i class="far fa-calendar me-1"></i>{{ Carbon\Carbon::parse($blog->date)->format('Y M D') }}
                                     </div>
-                                    <div class="sidebar__post-content">
-                                        <h3>
-                                            <a href="{{ $relatedBlog->link }}">{{ $relatedBlog->title }}</a>
-                                        </h3>
-                                    </div>
-                                </li>
+                                </div>
+                            </div>
                             @endforeach
-                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--============================== BlogDetails End ==============================-->
+    </section>

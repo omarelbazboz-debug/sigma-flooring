@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use DB;
 
 class RoleController extends Controller
 {
@@ -15,11 +17,7 @@ class RoleController extends Controller
         $this->middleware('permission:role');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
@@ -27,11 +25,7 @@ class RoleController extends Controller
         return view('admin.roles.roles',compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
@@ -39,12 +33,6 @@ class RoleController extends Controller
         return view('admin.roles.addRole',compact('permissions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -60,26 +48,9 @@ class RoleController extends Controller
         }else{
             $role->syncPermissions($request->permissions);
         }
-        return redirect('admin/roles')->with('success',trans('home.your_item_added_successfully'));
+        return redirect(LaravelLocalization::getCurrentLocale().'/admin/roles')->with('success',trans('home.your_item_added_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
@@ -89,13 +60,7 @@ class RoleController extends Controller
         return view('admin.roles.editRole',compact('role','allPermissions','rolePermissions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
@@ -120,15 +85,10 @@ class RoleController extends Controller
 
             $role->syncPermissions($request->permissions);
         }
-        return redirect('admin/roles')->with('success',trans('home.your_item_updated_successfully'));
+        return redirect(App::getLocale().'/admin/roles')->with('success',trans('home.your_item_updated_successfully'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($ids)
     {
         //

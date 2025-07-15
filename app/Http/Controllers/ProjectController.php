@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Category;
-use DB;
-use File;
-use Image;
+
 use App\Models\ProjectImage;
 use App\Models\CategoryAttribute;
 use App\Models\Attribute;
 use App\Models\ProjectAttribute;
 use App\Models\Region;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
 {
@@ -33,11 +37,7 @@ class ProjectController extends Controller
         return view('admin.projects.projects',compact('projects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $services = Service::where('status',1)->get();
@@ -70,19 +70,10 @@ class ProjectController extends Controller
 
         $add->img_alt = $request->img_alt;
         $add->category_id = $request->category_id;
-        if ($request->hasFile("image")) {
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path('uploads/projects/source/');
-            if (!file_exists($img_path)) {
-                mkdir($img_path, 0777, true);
-            }
-            $extension = $mimearr[1];
-            $fileName = rand(11111, 99999) . '.' . $extension;
-            $path = $img_path . $fileName;
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('projects');
             $add->image = $fileName;
         }
         $add->save();
@@ -114,23 +105,7 @@ class ProjectController extends Controller
         return redirect('admin/projects/'.$add->id.'/edit')->with('success',trans('home.your_produt_added_successfully_upload_images_and_complete_specifications'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $project=Project::find($id);
@@ -167,13 +142,6 @@ class ProjectController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $add = Project::find($id);
@@ -211,62 +179,35 @@ class ProjectController extends Controller
         $add->region_id = $request->region_id ;
 
 
-        if ($request->hasFile("image")) {
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $img_path = public_path('uploads/projects/source/');
-            if (!file_exists($img_path)) {
-                mkdir($img_path, 0777, true);
-            }
-            if ($add->image != null) {
-                file_exists($img_path.$add->image) ? unlink($img_path .$add->image):'';
-            }
-            $extension = $mimearr[1];
-            $fileName = rand(11111, 99999) . '.' . $extension;
-            $path = $img_path . $fileName;
-            $img =Image::make($file->getRealPath());
-            $img->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('projects');
+            SaveImageTo3Path::deleteImage(  $add->image, 'projects');
             $add->image = $fileName;
         }
-        if ($request->hasFile("img")) {
+
+        if ( $request->hasFile("img")) {
             $file = $request->file("img");
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = public_path('uploads/projects/source/' . $fileName);
-
-            $img_path = public_path() . '/uploads/projects/source/';
-            if ($add->img != null) {
-                file_exists($img_path . $add->img) ? unlink($img_path . $add->img) : '';
-            }
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('projects');
+            SaveImageTo3Path::deleteImage(  $add->img, 'projects');
             $add->img = $fileName;
         }
-        if ($request->hasFile("photo")) {
+
+        if ( $request->hasFile("photo")) {
             $file = $request->file("photo");
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = public_path('uploads/projects/source/' . $fileName);
-
-            $img_path = public_path() . '/uploads/projects/source/';
-            if ($add->photo != null) {
-                file_exists($img_path . $add->photo) ? unlink($img_path . $add->photo) : '';
-            }
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('projects');
+            SaveImageTo3Path::deleteImage(  $add->photo, 'projects');
             $add->photo = $fileName;
         }
-        if ($request->hasFile("banner")) {
+
+        if ( $request->hasFile("banner")) {
             $file = $request->file("banner");
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = public_path('uploads/projects/source/' . $fileName);
-
-            $img_path = public_path() . '/uploads/projects/source/';
-            if ($add->banner != null) {
-                file_exists($img_path . $add->banner) ? unlink($img_path . $add->banner) : '';
-            }
-
-            Image::make($file->getRealPath())->save($path);
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('projects');
+            SaveImageTo3Path::deleteImage(  $add->banner, 'projects');
             $add->banner = $fileName;
         }
         $add->save();
@@ -370,17 +311,17 @@ class ProjectController extends Controller
             Image::make($file->getRealPath())->save($path);
 
             DB::table('temp_upload_files')->insert(['server_name' => $fileName,'original_name' => $realName ,'project_id' => $request->projectId, 'type'=>'project']);
-            if(\Session::has('imagesUpload')){
-                \Session::push('imagesUpload',$fileName);
-                \Session::push('imagesUploadRealName',$realName);
+            if(Session::has('imagesUpload')){
+                Session::push('imagesUpload',$fileName);
+                Session::push('imagesUploadRealName',$realName);
             }else{
                 $images = [];
                 array_push($images,$fileName);
-                \Session::put('imagesUpload',$images);
+                Session::put('imagesUpload',$images);
 
                 $realImages = [];
                 array_push($realImages,$realName);
-                \Session::put('imagesUploadRealName',$realImages);
+                Session::put('imagesUploadRealName',$realImages);
             }
         }
     }
@@ -390,8 +331,8 @@ class ProjectController extends Controller
     public function removeUploadImages(Request $request)
     {
         $name = $request->name;
-        $names = \Session::get('imagesUploadRealName');
-        $images = \Session::get('imagesUpload');
+        $names = Session::get('imagesUploadRealName');
+        $images = Session::get('imagesUpload');
         $key = array_search($name, $names);
 
         $img_path = public_path('uploads/projects/source/');
@@ -401,8 +342,8 @@ class ProjectController extends Controller
 
         unset($images[$key]);
         unset($names[$key]);
-        \Session::put('imagesUpload',$images);
-        \Session::put('imagesUploadRealName',$names);
+        Session::put('imagesUpload',$images);
+        Session::put('imagesUploadRealName',$names);
         DB::table('temp_upload_files')->where('original_name',$name)->delete();
     }
 
@@ -477,8 +418,8 @@ class ProjectController extends Controller
             //////// save project attributes///////////////
             if($old_project->attribute){
                 ProjectAttribute::where('project_id',$add->id)->delete();
-                $attributes=$request->attribute;
-                $attributeValues=$request->attribute_value;
+                $attributes=$old_project->attribute;
+                $attributeValues=$old_project->attribute_value;
                 foreach($attributes as $key=>$attribute){
                     if($attribute){
                         $attr=new ProjectAttribute();

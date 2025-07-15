@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SaveImageTo3Path;
 use App\Models\Title;
-use DB;
-use File;
-use Image;
+
 use App\Models\TitleApplication;
 use Illuminate\Http\Request;
 
@@ -29,26 +28,17 @@ class TitleController extends Controller
         return view('admin.titles.title', compact('titles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
         return view('admin.titles.addTitle');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-       
+      
         $request->validate([
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
@@ -85,40 +75,11 @@ class TitleController extends Controller
         $add->order = $request->order;
         $add->status = $request->status;
 
-        if ($request->hasFile("image")) {
-
+        
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $mime = File::mimeType($file);
-            $mimearr = explode('/', $mime);
-
-            $extension = $mimearr[1];
-            $fileName = rand(11111, 99999) . '.' . $extension;
-            $path = public_path('uploads/titles/source/' . $fileName);
-            $resize200 = public_path('uploads/titles/resize200/' . $fileName);
-            $resize800 = public_path('uploads/titles/resize800/' . $fileName);
-
-            Image::make($file->getRealPath())->save($path);
-
-            $arrayimage = list($width, $height) = getimagesize($file->getRealPath());
-            $widthreal = $arrayimage[0];
-            $heightreal = $arrayimage[1];
-
-            $width200 = ($widthreal / $heightreal) * 150;
-            $height200 = $width200 / ($widthreal / $heightreal);
-
-            $img200 = Image::canvas($width200, $height200);
-            $image200 = Image::make($file->getRealPath())->resize($width200, $height200, function ($c) {
-                $c->aspectRatio();
-                $c->upsize();
-            });
-            $width800 = ($widthreal / $heightreal) * 800;
-            $height800 = $width800 / ($widthreal / $heightreal);
-
-            $img800 = Image::canvas($width800, $height800);
-            $image800 = Image::make($file->getRealPath())->resize($width800, $height800, function ($c) {
-                $c->aspectRatio();
-                $c->upsize();
-            });
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('titles');
             $add->image = $fileName;
         }
 
@@ -126,23 +87,8 @@ class TitleController extends Controller
         $add->save();
         return redirect('admin/titles')->with('success', trans('home.your_item_added_successfully'));
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+   
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $title = Title::find($id);
@@ -154,16 +100,9 @@ class TitleController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        
         $request->validate([
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
@@ -192,41 +131,12 @@ class TitleController extends Controller
         $add->title_color = $request->title_color;
         $add->status = $request->status;
 
-        if ($request->hasFile("image")) {
+        if ( $request->hasFile("image")) {
             $file = $request->file("image");
-            $extension = $file->getClientOriginalExtension();
-            $fileName = uniqid() . '.' . $extension;
-
-            $img_path = public_path('uploads/titles/source/');
-            $resize200 = public_path('uploads/titles/resize200/');
-            $resize800 = public_path('uploads/titles/resize800/');
-
-            $oldFilePaths = [
-                $img_path . $add->image,
-                $resize200 . $add->image,
-                $resize800 . $add->image,
-            ];
-
-            foreach ($oldFilePaths as $oldFilePath) {
-                if (File::exists($oldFilePath)) {
-                    try {
-                        File::delete($oldFilePath);
-                    } catch (\Exception $e) {
-                        \Log::error("Failed to delete file: " . $e->getMessage());
-                    }
-                }
-            }
-
-            if (!File::exists($img_path)) {
-                File::makeDirectory($img_path, 0755, true, true);
-            }
-
-            try {
-                Image::make($file->getRealPath())->save($img_path . $fileName);
-                $add->image = $fileName;
-            } catch (\Exception $e) {
-                \Log::error("Failed to save image: " . $e->getMessage());
-            }
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('titles');
+            SaveImageTo3Path::deleteImage(  $add->image, 'titles');
+            $add->image = $fileName;
         }
         $add->save();
         return redirect('/admin/titles')->with('success', trans('home.your_item_updated_successfully'));

@@ -830,15 +830,15 @@
     @yield('script')
 
     <script>
-        document.querySelectorAll('.ckeditor-classic').forEach(textarea => {
-             ClassicEditor.create(textarea)
-                .then(editor => {
-                editor.ui.view.editable.element.style.height = "200px";
-            })
-               .catch(error => {
-                console.error(error);
-               });
-      });
+    //     document.querySelectorAll('.ckeditor-classic').forEach(textarea => {
+    //          ClassicEditor.create(textarea)
+    //             .then(editor => {
+    //             editor.ui.view.editable.element.style.height = "200px";
+    //         })
+    //            .catch(error => {
+    //             console.error(error);
+    //            });
+    //   });
         // ///////// HTML editor ////////////////
         // const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         // const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;

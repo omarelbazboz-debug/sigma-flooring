@@ -37,7 +37,7 @@ class BlogItem extends Model
     }
     public function getLinkAttribute()
     {
-        return  LaravelLocalization::LocalizeUrl( $this->{'link_' . $this->setCurrentLang()}); 
+        return  LaravelLocalization::LocalizeUrl( 'blog/'.$this->{'link_' . $this->setCurrentLang()}); 
     }
     public function getTextAttribute()
     {
