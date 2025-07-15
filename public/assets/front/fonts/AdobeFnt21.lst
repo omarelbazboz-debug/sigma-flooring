@@ -1,0 +1,49 @@
+%!Adobe-FontList 1.20
+%Locale:0xc01
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:JosefinSans
+FamilyName:Josefin Sans
+StyleName:Regular
+FullName:Josefin Sans
+MenuName:Josefin Sans
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\Alaa El-Tabbakh\graphic designs\NEO DESIGN HUB\company profile\Document fonts\JosefinSans-Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:33008
+FileModTime:1397526450
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Josefin Sans
+NameArray:0,Win,1,Josefin Sans
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:JosefinSans-Thin
+FamilyName:Josefin Sans
+StyleName:Thin
+FullName:Josefin Sans Thin
+MenuName:Josefin Sans
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\Alaa El-Tabbakh\graphic designs\NEO DESIGN HUB\company profile\Document fonts\JosefinSans-Thin.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:33000
+FileModTime:1397526450
+WeightClass:250
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Josefin Sans Thin
+NameArray:0,Win,1,Josefin Sans
+%EndFont
+

@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /admin
+Disallow: /ajax/*
+Disallow: /ajax/
+Disallow: /ajax
+Allow: /
+
+
+Sitemap: https://www.dramrsamy.com/en/sitemap.xml
+Sitemap: https://www.dramrsamy.com/en/articles-sitemap.xml
+Sitemap: https://www.dramrsamy.com/en/services-sitemap.xml
+Sitemap: https://www.dramrsamy.com/en/projects.xml
+
+Sitemap: https://www.dramrsamy.com/ar/sitemap.xml
+Sitemap: https://www.dramrsamy.com/ar/articles-sitemap.xml
+Sitemap: https://www.dramrsamy.com/ar/services-sitemap.xml
+Sitemap: https://www.dramrsamy.com/ar/projects-sitemap.xml

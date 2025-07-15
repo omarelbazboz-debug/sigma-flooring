@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /admin
+Disallow: /ajax/*
+Disallow: /ajax/
+Disallow: /ajax
+Allow: /
+
+
+Sitemap: https://fadaligroup.com/sitemap.xml
+Sitemap: https://fadaligroup.com/blogs-sitemap.xml
+Sitemap: https://fadaligroup.com/services-sitemap.xml

@@ -1,0 +1,936 @@
+:root {
+  --main-color: #000000;
+  --second-color: #ffffff;
+  --third-color: #404040;
+  --fourth-color: #808080;
+  --fifth-color: rgb(192, 192, 192);
+  --background-color: rgba(192, 192, 192, 0.4);
+  --background-color-filter: rgba(192, 192, 192, 0.4) !important;
+  --placeholder-color: #a1a1a1;
+}
+@font-face {
+  font-family: "ggSans";
+  src: url("../fonts/gg\ sans\ Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "JosefinSans";
+  src: url("../fonts/JosefinSans-Thin.ttf") format("truetype");
+  font-weight: 100; /* أو weight مناسب للـ Thin */
+  font-style: normal;
+}
+@font-face {
+  font-family: "Adobe";
+  src: url("../fonts/AdobeFnt21.lst") format("truetype");
+  font-weight: 100; /* أو weight مناسب للـ Thin */
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+body {
+  font-family: "ggSans", sans-serif !important;
+}
+html,
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* ::-webkit-scrollbar-track {
+  background: transparent;
+} */
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 4px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* font-family: "JosefinSans", sans-serif !important; */
+}
+.text-xl {
+  font-size: 8rem;
+}
+.text-lg {
+  font-size: 3rem;
+}
+.text-md {
+  font-size: 2.2rem;
+}
+.text-sm {
+  font-size: 1.5rem;
+}
+
+.text-main {
+  color: var(--third-color);
+}
+.text-second {
+  color: var(--fourth-color);
+}
+.btn-send {
+  background-color: var(--main-color) !important;
+  transition: all 0.3s ease-in;
+  color: var(--second-color) !important;
+  padding: 0.5rem 2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out !important;
+  font-size: 17px;
+}
+.btn-send:hover {
+  background-color: #1313139f !important;
+  color: var(--second-color) !important;
+}
+.bg-filter {
+  background-color: var(--background-color-filter);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.bg-section {
+  background-color: var(--background-color);
+}
+/*  
+##################################################
+#                  SOCIAL ICONS                  #
+##################################################
+*/
+ .social-icon{
+inset-inline-end: 0 !important;
+  margin-inline-end: 16px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.social-icon a {
+  background-color: #404040;
+  color: var(--second-color) !important;
+  padding: 0.5rem;
+  border-radius: 100%;
+  margin: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease-out;
+  border: none;
+}
+.social-icon a:hover {
+  background-color: var(--main-color);
+  color: var(--second-color) !important;
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.social-icon .back-to-top {
+  background-color: #404040;
+  color: var(--second-color) !important;
+  width: 40px;
+  height: 40px;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: none;
+  transition: all 0.4s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+.social-icon .back-to-top:hover {
+  background-color: var(--main-color);
+  color: var(--second-color);
+  transform: scale(1.1);
+}
+.social-icon .back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+/*  
+##################################################
+#                  Home                          #
+##################################################
+*/
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 127px 36px -28px inset;
+  transition: 0.3s ease-out;
+}
+.home {
+  position: relative;
+  background-image: url("../images/close-up-details-wood-surface2.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* هنا تضبط اللون والشفافية */
+  z-index: 0;
+  backdrop-filter: blur(10px);
+}
+
+.fixed-top {
+  background-color: white;
+  box-shadow: none;
+}
+.fixed-top .navbar-brand img {
+  filter: brightness(0);
+}
+.fixed-top ul li a.nav-link {
+  color: #010101 !important;
+}
+.fixed-top .navbar-toggler i {
+  color: #000000 !important;
+}
+.nav-item {
+  position: relative;
+}
+.offcanvas-body .nav-link {
+  color: black;
+}
+.nav-link {
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease-in-out;
+  padding: 12px 12px;
+  width: fit-content;
+  color: white;
+
+  position: relative;
+}
+.has-submenu {
+  min-height: 100%;
+}
+.dropdown-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* تنسيق عناصر القائمة */
+.dropdown-item {
+  padding: 10px 30px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.dropdown-submenu:hover {
+  background-color: #f8f9fa;
+}
+
+/* الأيقونات */
+.iconToggle {
+  transition: transform 0.3s;
+}
+.iconToggle:nth-child(1) {
+  /* transition: transform 0.3s; */
+  color: white;
+}
+
+.nav-item.dropdown.show .iconToggle,
+.nav-item.dropdown:hover .iconToggle {
+  transform: rotate(180deg);
+}
+
+.dropdown-submenu.show .iconToggle,
+.dropdown-submenu:hover .iconToggle {
+  transform: rotate(90deg);
+}
+
+/* المستويات المختلفة للقوائم */
+.first-level {
+  background-color: #fff;
+  /* border: 1px solid #eee; */
+  /* width: 250px; */
+  max-height: 0;
+  display: none;
+}
+
+.second-level {
+  background-color: #f8f9fa;
+  padding-left: 15px;
+  max-height: 0;
+  display: none;
+}
+
+/* تأثيرات القوائم المنسدلة */
+.nav-item.dropdown.show .first-level,
+.nav-item.dropdown:hover .first-level {
+  max-height: 1000px;
+  display: block;
+}
+
+.dropdown-submenu.show .second-level,
+.dropdown-submenu:hover .second-level {
+  max-height: 1000px;
+  display: block;
+}
+.nav-item.dropdown:hover {
+  display: block;
+}
+/* تنسيق عام للقائمة الجانبية */
+
+.offcanvas-header {
+  padding: 1rem 1.5rem;
+}
+
+.nav-link {
+  padding: 0.75rem 1.5rem;
+  color: #212529;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--main-color);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-link.active {
+  color: var(--third-color);
+  font-weight: 500;
+}
+
+/* تنسيق القوائم المنسدلة */
+.navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* تنسيق المستويات الداخلية */
+.nav.flex-column .nav-link {
+  padding-left: 2.5rem;
+}
+
+.nav.flex-column .nav.flex-column .nav-link {
+  padding-left: 3.5rem;
+}
+
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.hero-slider .owl-carousel .item {
+  height: 100vh;
+}
+
+.hero-slider .owl-carousel .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 2s ease-in-out;
+}
+
+.hero-slider .owl-item:not(.active) img {
+  transform: scale(0.4); /* تصغير الصور غير النشطة */
+  opacity: 0.7; /* تخفيف الصور غير النشطة (اختياري) */
+}
+
+.hero-slider .owl-item.active img {
+  transform: scale(1); /* تكبير الصورة النشطة */
+}
+
+.hero-slider .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* طبقة شبه شفافة */
+  z-index: 1;
+}
+.hero .item .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* طبقة شبه شفافة */
+  z-index: 1;
+}
+.hero-slider-pages {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slider .text-slider {
+  position: absolute !important;
+  top: 50% !important;
+  inset-inline-start: 50% !important;
+  z-index: 2 !important;
+  transform: translate(-50%, -50%) !important;
+}
+.hero-slider .text-slider h1 {
+  font-size: 4rem;
+  color: var(--second-color);
+  font-weight: bold !important;
+}
+
+/* .owl-carousel .owl-item.center .text-item {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-100%);
+
+  text-align: start !important;
+  color: var(--second-color);
+} */
+
+.hero-slider .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+.hero-slider .slider-content {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  z-index: 2;
+  color: white;
+  margin: 0px 120px;
+
+  transition: all 0.5s;
+}
+.hero-slider .slider-content h1 {
+  color: var(--second-color);
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-size: 4rem;
+}
+
+.hero-slider .hero-slider-content .btn-about {
+  background-color: var(--main-color);
+  color: var(--third-color);
+  padding: 0.5rem 2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  font-size: 20px;
+}
+.hero-slider .hero-slider-content .btn-about:hover {
+  background-color: var(--fourth-color);
+}
+
+.hero {
+  transition: all 0.3s;
+  position: relative;
+}
+
+.hero .owl-nav {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  padding: 0 20px;
+  justify-content: space-between;
+  align-items: center;
+  /* margin: 0 auto; */
+  z-index: 99;
+}
+.hero:hover .owl-nav {
+  transition: all 0.3s;
+}
+.hero .owl-nav .owl-prev {
+  color: var(--second-color) !important;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.hero:hover .owl-nav .owl-prev {
+  transition: all 0.3s;
+}
+.hero .owl-nav .owl-prev:hover {
+  background-color: var(--background-color-filter);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--second-color) !important;
+  transform: scale(1.1);
+}
+.hero .owl-nav .owl-next {
+  color: var(--second-color) !important;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.hero:hover .owl-nav .owl-next {
+  transition: all 0.3s;
+}
+.hero .owl-nav .owl-next:hover {
+  background-color: var(--background-color-filter);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--second-color) !important;
+  transform: scale(1.1);
+}
+.hero .owl-nav .owl-prev > span,
+.hero .owl-nav .owl-next > span {
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--second-color);
+}
+.hero .owl-nav .owl-prev:hover:hover > span,
+.hero .owl-nav .owl-next:hover > span {
+  font-size: 40px;
+
+  color: var(--main-color) !important;
+}
+.hero .owl-nav .owl-prev > span {
+  margin: 0 auto;
+}
+
+.hero .owl-nav .owl-next > span {
+  margin-left: 0px;
+}
+.slider-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+}
+/*  
+##################################################
+#                  About Us                      #
+##################################################
+*/
+.home-about {
+  background-image: url("../images/iskussktvennaya-trava\ 2.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.custom-logo {
+  height: 600px;
+  width: 100% !important;
+  position: relative;
+}
+.custom-logo-two {
+  height: 600px;
+  width: 100% !important;
+  position: relative;
+}
+.custom-logo-about {
+  width: 100% !important;
+}
+.experience-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("../images/close-up-details-wood-surface.webp") center/cover;
+  background-attachment: fixed;
+  padding: 100px 20px;
+  color: white;
+  text-align: center;
+}
+
+.experience-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.experience-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.experience-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.expertise-highlights {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.expertise-highlights span {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(5px);
+}
+
+@media (max-width: 600px) {
+  .experience-content h2 {
+    font-size: 1.8rem;
+  }
+  .expertise-highlights {
+    gap: 10px;
+  }
+}
+/*  
+##################################################
+#                   Services                     #
+##################################################
+*/
+.home-services {
+  background-image: url("../images/top-view-man-tiling-floor.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.custom-services {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-services:hover {
+  transform: translateY(-5px);
+}
+.custom-services img {
+  height: 350px;
+  width: 100%;
+}
+.custom-services h2 {
+  font-size: 22px;
+}
+/*  
+##################################################
+#                 Our Categories                 #
+##################################################
+*/
+.home-categories {
+  background-image: url("../images/Flooring\ products.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.categories-card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  height: 100%;
+  background-color: white;
+}
+
+.categories-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+  height: 220px;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.5s;
+}
+
+.categories-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+
+
+.categories-card  .product-category {
+  display: inline-block;
+    color: var(--main-color) !important;
+  background-color: white;
+
+  /* padding: 0.25rem 1rem; */
+  /* border-radius: 50px; */
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+/*  
+##################################################
+#                 Our Products                   #
+##################################################
+*/
+.home-products {
+  background-image: url("../images/Wall\ Coverings.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.nav-tabs-custom {
+  border-bottom: none;
+  justify-content: center;
+  margin-bottom: 2rem;
+  align-items:center;
+  gap:10px
+}
+
+.nav-tabs-custom .nav-link {
+  color: var(--main-color);
+  font-weight: 600;
+  border: none;
+  padding: 1rem 2rem;
+  position: relative;
+  transition: all 0.3s;
+  margin: 6px;
+  border-radius: 10px;
+ text-align:start;
+}
+
+.nav-tabs-custom .nav-link:hover {
+  color: var(--main-color);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs-custom .nav-link.active {
+  color: var(--main-color);
+  background-color: var(--second-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: none;
+}
+
+.product-card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+
+  height: 100%;
+  background-color: white;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.product-img {
+  height: 220px;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.5s;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+.product-body {
+  padding: 0px 20px;
+}
+
+.product-title {
+  color: var(--main-color);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.product-category {
+  display: inline-block;
+  background-color: var(--second-color);
+  color: var(--second-color);
+  padding: 0.25rem 1rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.section-title {
+  color: var(--main-color);
+  margin-bottom: 3rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--fourth-color);
+}
+/*  
+##################################################
+#              Our Products Details              #
+##################################################
+*/
+.home-products-details {
+  background-image: url("../images/HDF\ Flooring.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.thumbnail-item {
+  cursor: pointer;
+}
+/*  
+##################################################
+#                      Blog                      #
+##################################################
+*/
+.home-blog {
+  background-image: url("../images/bg-3.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.article-card {
+  transition: all 0.3s ease;
+  border-radius: 12px !important;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.image-wrapper {
+  height: 220px;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.card-img-top {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.zoom-effect:hover .card-img-top {
+  transform: scale(1.05);
+}
+.card-title {
+  font-size: 22px;
+}
+.category-badge {
+  top: 15px;
+  left: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover:after {
+  width: 100%;
+}
+
+.btn-more {
+  transition: all 0.3s ease;
+  /* border-width: 2px; */
+  padding: 0.375rem 1.25rem;
+}
+
+.btn-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/*  
+##################################################
+#                  Blog Details                  #
+##################################################
+*/
+.home-blog-details {
+  background-image: url("../images/1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+/*  
+##################################################
+#                Contact Us                      #
+##################################################
+*/
+.contact-hero {
+  background-image: url("../images/close-up-details-wood-surface1.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.contact-icon-circle {
+  width: 30px;
+  height: 30px;
+}
+/*  
+##################################################
+#                  Footer                        #
+##################################################
+*/
+footer img {
+  filter: brightness(100);
+}
+@media (max-width: 768px) {
+  footer .logo-footer {
+    text-align: center;
+  }
+  footer img {
+    width: 180px;
+  }
+}
+footer .social a {
+  transition: all 0.4s ease-in-out;
+}
+footer .social a:hover {
+  color: var(--second-color);
+}
+footer .links li a {
+  transition: all 0.4s ease-in-out;
+}
+footer .links li a:hover {
+  color: var(--second-color);
+}

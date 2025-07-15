@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Page extends Model
+{
+    //
+    protected $guarded = [];
+
+    public static function setCurrentLang()
+    {
+        return app()->getLocale();
+    }
+    public function getTitleAttribute()
+    {
+        return $this->{'title_' . $this->setCurrentLang()};
+    }
+    public function getTextAttribute()
+    {
+        return $this->{'text_' . $this->setCurrentLang()};
+    }
+    public function getLinkAttribute()
+    {
+        return $this->{'link_' . $this->setCurrentLang()};
+    }
+}

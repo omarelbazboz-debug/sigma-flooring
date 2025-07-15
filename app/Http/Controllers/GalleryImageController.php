@@ -1,0 +1,252 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use DB;
+use File;
+use Image;
+use App\Models\GalleryImage;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class GalleryImageController extends Controller
+{
+
+
+    public function __construct(){
+        $this->middleware(['permission:galleryImage']);
+    }
+
+
+    public function index(){
+        $galleryImages = GalleryImage::orderBy('order','asc')->get();
+        return view('admin.galleryImages.galleryImages',compact('galleryImages'));
+    }
+
+
+    public function createPluck(){
+        $images = DB::table('temp_upload_files')->where('type','gallery_image')->get();
+        if(count($images) > 0){
+            foreach($images as $image){
+                try{
+                    $img_path = public_path() . '/uploads/galleryImages/source/';
+                    if($image->server_name){
+                        file_exists($img_path.$image->server_name) ? unlink($img_path .$image->server_name):'';
+
+                    }
+                }catch(Exception $e){
+                }
+            }
+            DB::table('temp_upload_files')->where('type','gallery_image')->delete();
+            session()->forget('imagesUpload');
+            session()->forget('imagesUploadRealName');
+        }
+
+
+        return view('admin.galleryImages.addPluckGalleryImages');
+    }
+
+    public function storePluck(){
+        ///////// save gallery images//////
+        if(\Session::has('imagesUpload')){
+
+//            $images = \Session::get('imagesUpload');
+            $images = DB::table('temp_upload_files')->where('type','gallery_image')->select('server_name')->get();
+            foreach ($images as $key=>$file) {
+                $img = new GalleryImage();
+                $img->img = $file->server_name;
+                $img->status=1;
+                $img->save();
+            }
+        }
+
+        DB::table('temp_upload_files')->where('type','gallery_image')->delete();
+        session()->forget('imagesUpload');
+        session()->forget('imagesUploadRealName');
+
+        $GalleryImageIds = GalleryImage::pluck('id')->toArray();
+        foreach ($GalleryImageIds as $index => $id) {
+            GalleryImage::where('id', $id)->update(['order' => $index + 1]);
+        }
+
+        return redirect('admin/gallery-images')->with('success',trans('home.your_items_added_successfully'));
+    }
+
+
+    public function create(){
+        return view('admin.galleryImages.addGalleryImage');
+    }
+
+
+    public function store(Request $request){
+        $add = new GalleryImage();
+        $add->text_en = $request->text_en;
+        $add->text_ar = $request->text_ar;
+        $add->order = $request->order;
+
+        if($request->status){
+            $add->status = 1;
+        }else{
+            $add->status = 0;
+        }
+
+        if ($request->hasFile("img")) {
+
+            $file = $request->file("img");
+            $mime = File::mimeType($file);
+            $mimearr = explode('/', $mime);
+
+            // $destinationPath = public_path() . '/uploads/'; // upload path
+            $extension = $mimearr[1]; // getting file extension
+            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
+            $path = public_path('uploads/galleryImages/source/' . $fileName);
+            //  $file->move($destinationPath, $fileName);
+
+            Image::make($file->getRealPath())->save($path);
+
+            $add->img = $fileName;
+        }
+        $add->save();
+        return redirect('admin/gallery-images')->with('success',trans('home.your_item_added_successfully'));
+    }
+
+    public function edit($id){
+        $galleryImage=GalleryImage::find($id);
+        if($galleryImage){
+            return view('admin.galleryImages.editGalleryImage',compact('galleryImage'));
+        }else{
+            abort('404');
+        }
+    }
+
+    public function update(Request $request,$id){
+        $add = GalleryImage::find($id);
+        $add->text_en = $request->text_en;
+        $add->text_ar = $request->text_ar;
+        $add->order = $request->order;
+
+        if($request->status){
+            $add->status = 1;
+        }else{
+            $add->status = 0;
+        }
+        if ($request->hasFile("img")) {
+
+            $file = $request->file("img");
+            $mime = File::mimeType($file);
+            $mimearr = explode('/', $mime);
+
+            $img_path = public_path() . '/uploads/galleryImages/source/';
+            if ($add->img != null) {
+                file_exists($img_path.$add->img) ? unlink($img_path .$add->img):'';
+
+            }
+           // $destinationPath = public_path() . '/uploads/'; // upload path
+            $extension = $mimearr[1]; // getting file extension
+            $fileName = rand(11111, 99999) . '.' . $extension; // renameing image
+            $path = public_path('uploads/galleryImages/source/' . $fileName);
+              //  $file->move($destinationPath, $fileName);
+
+            Image::make($file->getRealPath())->save($path);
+
+            $add->img = $fileName;
+        }
+
+        $add->save();
+        return redirect('admin/gallery-images')->with('success',trans('home.your_item_updated_successfully'));
+    }
+
+    public function reorderImeges(Request $request){
+        $request->validate([
+            'ids'   => 'required|array',
+            'ids.*' => 'integer',
+        ]);
+
+        foreach ($request->ids as $index => $id) {
+            GalleryImage::where('id', $id)->update(['order' => $index + 1]);
+        }
+
+        $positions = GalleryImage::pluck('order', 'id');
+
+        return response(compact('positions'), Response::HTTP_OK);
+
+    }
+
+
+    /////// upload product images///////////////
+    public function uploadImages(Request $request){
+        if($request->hasFile('file')){
+
+            $file = $request->file("file");
+            $realName = $file->getClientOriginalName();
+            $mime = File::mimeType($file);
+            $mimearr = explode('/', $mime);
+
+            // $destinationPath = public_path() . '/uploads/'; // upload path
+            $extension = $mimearr[1]; // getting file extension
+            $fileName = rand(11111111, 99999999) . '.' . $extension; // renameing image
+
+            $path = public_path('uploads/galleryImages/source/' . $fileName);
+
+            //  $file->move($destinationPath, $fileName);
+
+            Image::make($file->getRealPath())->save($path);
+
+    
+            DB::table('temp_upload_files')->insert(['server_name' => $fileName,'original_name' => $realName , 'type'=>'gallery_image']);
+            if(\Session::has('imagesUpload')){
+                \Session::push('imagesUpload',$fileName);
+                \Session::push('imagesUploadRealName',$realName);
+            }else{
+                $images = [];
+                array_push($images,$fileName);
+                \Session::put('imagesUpload',$images);
+
+                $realImages = [];
+                array_push($realImages,$realName);
+                \Session::put('imagesUploadRealName',$realImages);
+            }
+        }
+    }
+
+    ///////// delete uploaded images///////////
+    public function removeUploadImages(Request $request){
+        $name = $request->name;
+        $names = \Session::get('imagesUploadRealName');
+        $images = \Session::get('imagesUpload');
+        $key = array_search($name, $names);
+
+        $img_path = public_path() . '/uploads/galleryImages/source/';
+
+        file_exists($img_path.$images[$key]) ? unlink($img_path .$images[$key]):'';
+
+
+        unset($images[$key]);
+        unset($names[$key]);
+        \Session::put('imagesUpload',$images);
+        \Session::put('imagesUploadRealName',$names);
+        DB::table('temp_upload_files')->where('original_name',$name)->delete();
+    }
+
+    public function destroy($ids){
+        $ids = explode(',', $ids);
+        if ($ids[0] == 'on') {
+            unset($ids[0]);
+        }
+        foreach ($ids as $id) {
+            $m = GalleryImage::findOrFail($id);
+            $img_path = public_path() . '/uploads/gallery-images/source/';
+
+            if ($m->image != null) {
+                file_exists($img_path . $m->image)?unlink($img_path .$m->image):'';
+            }
+            $m->delete();
+        }
+
+        $GalleryImageIds = GalleryImage::pluck('id')->toArray();
+        foreach ($GalleryImageIds as $index => $id) {
+            GalleryImage::where('id', $id)->update(['order' => $index + 1]);
+        }
+    }
+
+}
