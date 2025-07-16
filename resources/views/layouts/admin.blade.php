@@ -157,10 +157,10 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-                            <a class="dropdown-item" href="{{Helper::App('user/account-settings') }}"><i
+                            <a class="dropdown-item" href="{{Helper::AppUrl('user/account-settings') }}"><i
                                     class="mdi mdi-face-profile font-size-16 align-middle me-1"></i>
                                 {{ trans('home.edit_profile') }}</a>
-                            <a class="dropdown-item" href="{{Helper::App('admin/settings') }}"><i
+                            <a class="dropdown-item" href="{{Helper::AppUrl('admin/settings') }}"><i
                                     class="mdi mdi-lock font-size-16 align-middle me-1"></i>
                                 {{ trans('home.settings') }}</a>
                             <div class="dropdown-divider"></div>
@@ -189,19 +189,19 @@
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li>
-                            <a href="{{Helper::App('/') }}" target="_blank">
+                            <a href="{{Helper::AppUrl('/') }}" target="_blank">
                                 <i class="bx bx-mobile-landscape"></i>
                                 <span data-key="t-dashboard">{{ trans('home.website') }}</span>
                             </a>
                         </li>
                         <li class="@if (Request::segment(3) == '') mm-active @endif">
-                            <a href="{{Helper::App('admin') }}">
+                            <a href="{{Helper::AppUrl('admin') }}">
                                 <i data-feather="home"></i>
                                 <span data-key="t-dashboard">{{ trans('home.dashboard') }}</span>
                             </a>
                         </li>
                         <li class="@if (Request::segment(3) == '') mm-active @endif">
-                            <a href="{{Helper::App('scan') }}" target="_blank">
+                            <a href="{{Helper::AppUrl('scan') }}" target="_blank">
                                 <i data-feather="home"></i>
                                 <span data-key="t-dashboard">{{ trans('home.scan') }}</span>
                             </a>
@@ -237,13 +237,13 @@
                                 @can(['menu', 'menuItem'])
                                     <li>
                                         <a class="@if (Request::segment(3) == 'menus') active @endif"
-                                            href="{{Helper::App('admin/menus') }}">
+                                            href="{{Helper::AppUrl('admin/menus') }}">
                                             <span> {{ trans('home.menus') }}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="@if (Request::segment(3) == 'menu-items') active @endif"
-                                            href="{{Helper::App('admin/menu-items') }}">
+                                            href="{{Helper::AppUrl('admin/menu-items') }}">
                                             <span>{{ trans('home.menu_items') }}</span>
                                         </a>
                                     </li>
@@ -265,7 +265,7 @@
                                 @can('introSlider')
                                     <li>
                                         <a class="@if (Request::segment(3) == 'intro-sliders') active @endif"
-                                            href="{{Helper::App('admin/intro-sliders') }}">
+                                            href="{{Helper::AppUrl('admin/intro-sliders') }}">
                                             <span> {{ trans('home.intro_sliders') }}</span>
                                         </a>
                                     </li>
@@ -273,7 +273,7 @@
                                 @can('offersSlider')
                                     <li>
                                         <a class="@if (Request::segment(3) == 'offers-sliders') active @endif"
-                                            href="{{Helper::App('admin/offers-sliders') }}">
+                                            href="{{Helper::AppUrl('admin/offers-sliders') }}">
                                             <span> {{ trans('home.offers_sliders') }}</span>
                                         </a>
                                     </li>
@@ -281,7 +281,7 @@
                                 @can('homeSlider')
                                     <li>
                                         <a class="@if (Request::segment(3) == 'home-sliders') active @endif"
-                                            href="{{Helper::App('admin/home-sliders') }}">
+                                            href="{{Helper::AppUrl('admin/home-sliders') }}">
                                             <span> {{ trans('home.home_sliders') }}</span>
                                         </a>
                                     </li>
@@ -396,7 +396,7 @@
                         @endcan
                         @can('home-images')
                             <li class="nav-item @if (Request::segment(3) == 'home-images') active show @endif">
-                                <a class="nav-link" href="{{Helper::App('admin/home-images') }}"><i
+                                <a class="nav-link" href="{{Helper::AppUrl('admin/home-images') }}"><i
                                         class="fe fe-camera"></i><span
                                         class="sidemenu-label">{{ trans('home.homeImages') }}</span></a>
                             </li>
