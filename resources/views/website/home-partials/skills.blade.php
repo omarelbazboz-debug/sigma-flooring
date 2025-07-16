@@ -14,7 +14,7 @@
                 <div class="expertise-highlights mx-auto d-flex flex-column align-items-center px-5 py-3">
 
                     <i class="fa-solid fa-user fs-4"></i>
-                    <span class="counter text-white fs-4 fw-bolder w-auto" data-target="1058"></span>
+                    <span class="counter text-white fs-4 fw-bolder w-auto" data-target="{{ $progress->number }}"></span>
                 </div>
             </div>
             <div class="row gx-lg-5 gy-5 text-center text-white mt-2">
@@ -24,7 +24,7 @@
                             <div class="expertise-highlights">
                                 <div class="user-count d-flex flex-column  gap-3">
                                     <i class="fa-solid fa-user fs-4"></i>
-                                    <span class="counter text-white fs-4 fw-bolder" data-target="{{ $progress->number }}"></span>
+                                    <span class="counter text-white fs-4 fw-bolder" data-target="{{ $progresses[0]->number }}"></span>
                                 </div>
 
                             </div>
@@ -36,7 +36,7 @@
         </div>
     </div>
   </section>
-  
+
 @endif
 
 
