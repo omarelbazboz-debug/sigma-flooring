@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="row gx-lg-5 gy-5 text-center text-white mt-2">
-                @foreach ($progresses->slice(1) as $key => $progress)
+                @foreach ($progresses->slice(2) as $key => $progress)
                     <div class="col-12 col-md-2">
                         <div class=" count d-flex flex-column justify-content-center gap-3 h-100 border-2 p-4">
                             <div class="expertise-highlights">
