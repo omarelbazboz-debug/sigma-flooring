@@ -21,7 +21,7 @@ return [
     // again if the session expires.
     //
     // If false, system will take app.php locale attribute
-    'useAcceptLanguageHeader' => true,
+    'useAcceptLanguageHeader' => false,
 
     // If `hideDefaultLocaleInURL` is true, then a url without locale
     // is identical with the same url with default locale.
@@ -45,9 +45,6 @@ return [
     //Example: 'localesOrder' => ['ar','en'],
     'localesOrder' => ['ar','en'],
 
-
-
-    'defaultLocale' => 'en',
     //  If you want to use custom lang url segments like 'at' instead of 'de-AT', you can use the mapping to tallow the LanguageNegotiator to assign the descired locales based on HTTP Accept Language Header. For example you want ot use 'at', so map HTTP Accept Language Header 'de-AT' to 'at' (['de-AT' => 'at']).
     'localesMapping' => [],
 
@@ -57,7 +54,7 @@ return [
 
     // URLs which should not be processed, e.g. '/nova', '/nova/*', '/nova-api/*' or specific application URLs
     // Defaults to []
-    'urlsIgnored' => ['/admin*'],
+    'urlsIgnored' => ['/skipped'],
 
     'httpMethodsIgnored' => ['POST', 'PUT', 'PATCH', 'DELETE'],
 
