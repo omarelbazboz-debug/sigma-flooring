@@ -10,12 +10,12 @@ class ForceArabicIfNoLocaleMiddleware
 {
     public function handle($request, Closure $next)
     {
-        $segments = $request->segments();
+        // $segments = $request->segments();
 
-        if (!in_array($segments[0] ?? '', ['en', 'ar'])) {
-            App::setLocale('ar');
-            Session::put('locale', 'ar');
-        }
+        // if (!in_array($segments[0] ?? '', ['en', 'ar'])) {
+        //     App::setLocale('ar');
+        //     Session::put('locale', 'ar');
+        // }
 
         return $next($request);
     }
