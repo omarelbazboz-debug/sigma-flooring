@@ -27,7 +27,7 @@ class ProgressController extends Controller
     public function create()
     {
         //
-        return view('admin.progresses.addprogress');
+        return view('admin.progresses.addProgress');
     }
 
 
@@ -63,7 +63,7 @@ class ProgressController extends Controller
     {
         $progress =Progress::find($id);
         if($progress){
-            return view('admin.progresses.editprogress',compact('progress'));
+            return view('admin.progresses.editProgress',compact('progress'));
         }else{
             abort('404');
         }
