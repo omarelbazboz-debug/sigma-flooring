@@ -104,7 +104,7 @@
                         <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <img id="header-lang-img"
-                                src="{{ url($lang == 'ar' ? 'resources/public/assets/back/images/flags/eg.png' : 'resources/public/assets/back/images/flags/us.jpg') }}"
+                                src="{{ url($lang == 'ar' ? 'public/assets/back/images/flags/eg.png' : 'public/assets/back/images/flags/us.jpg') }}"
                                 alt="{{ $lang }}" height="16">
                         </button>
 
