@@ -58,13 +58,13 @@
                     <label for="email">{{trans('home.confirm_password')}}</label>
                     <input id="password" type="password" class="form-control validate" name="password_confirmation" placeholder="{{trans('home.confirm_password')}}" required>
                 </div>
-            </div>    
+            </div>
             <button type="submit" class="btn btn-primary">{{trans('home.register')}}</button>
             <div class="mt-3 text-center">
                 <p class="mb-0">{{trans('home.Already have an account?')}}' <a href="{{url('login')}}">{{trans('home.Sign In')}}</a></p>
                 <p class="mb-0">{{trans('home.Do_you_want_to_be_avendor?')}} <a href="{{url('vendor-board/register')}}">{{trans('home.create_account')}}</a></p>
             </div>
-        </form> 
+        </form>
     </div>
 </section>
 @endsection
