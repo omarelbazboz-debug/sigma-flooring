@@ -115,7 +115,7 @@ Route::get('about-us','WebsiteController@aboutUs');
     Route::get('appointment','WebsiteController@appointment');
     Route::post('save/contact-us','WebsiteController@saveContactUs');
     Route::get('page/{link}','WebsiteController@getPage');
-    Route::get('/scan', [ScanController::class, 'scan']);
+    // Route::get('/scan', [ScanController::class, 'scan']);
 
 
     Route::get('service/{link}', [WebsiteController::class, 'getServiceDetails']);
