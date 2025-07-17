@@ -34,6 +34,11 @@ class Album extends Model
         return Helper::AppUrl('service/'.$this->{'link_'. $this->setCurrentLang()});
     }
 
+    public function getTextAttribute()
+    {
+        return $this->{'text_'. $this->setCurrentLang()};
+    }
+
 
         public function getImageAttribute()
             {

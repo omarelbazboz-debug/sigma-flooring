@@ -30,6 +30,14 @@ class AlbumController extends Controller
     }
 
     public function store(Request $request){
+        $request = (object)$request->all();
+        if(request()->hasFile('image')){
+
+            $file = $request->file("image");
+            $saveImage = new SaveImageTo3Path($file,true);
+            $fileName = $saveImage->saveImages('album_items');
+            $request->name_en = $fileName;
+        }
         $album = Album::create([
             'name_en'=>$request->name_en,
             'name_ar'=>$request->name_ar,
@@ -42,12 +50,7 @@ class AlbumController extends Controller
 
             ]);
 
-        if($request->hasFile('image')){
 
-             $file = $request->file("image");
-            $saveImage = new SaveImageTo3Path($file,true);
-            $fileName = $saveImage->saveImages('album_items');
-        }
 
 
             if($request->type=="images")
