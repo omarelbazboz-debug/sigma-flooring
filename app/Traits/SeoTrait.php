@@ -21,7 +21,7 @@ trait SeoTrait
 
     public function homePageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $seo = SeoAssistant::first();
         $setting = Setting::first();
         $configration = Configration::where('lang', $lang)->first();
@@ -50,12 +50,12 @@ trait SeoTrait
         );
 
         $metatags = new MetaTags();
-        $home_title = ($lang == 'en') 
+        $home_title = ($lang == 'en')
             ? ($seo->home_meta_title ?? $configration->app_name ?? '')
             : ($seo->home_meta_title_ar ?? $configration->app_name ?? '');
         $home_title = (string)($home_title ?? '');
         $home_meta_title = $home_title;
-        $home_desc = ($lang == 'en') 
+        $home_desc = ($lang == 'en')
             ? ($seo->home_meta_desc ?? strip_tags($configration->about_app ?? ''))
             : ($seo->home_meta_desc_ar ?? strip_tags($configration->about_app ?? ''));
         $home_desc = (string)($home_desc ?? '');
@@ -76,7 +76,7 @@ trait SeoTrait
     public function aboutUsPageSeo()
     {
         $about = About::first();
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $setting = Setting::first();
         $seo = SeoAssistant::first();
@@ -112,7 +112,7 @@ trait SeoTrait
 
     public function contactUsPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $setting = Setting::first();
         $seo = SeoAssistant::first();
@@ -145,7 +145,7 @@ trait SeoTrait
 
     public function blogsPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $setting = Setting::first();
         $seo = SeoAssistant::first();
@@ -167,7 +167,7 @@ trait SeoTrait
 
     public function CategoryBlogsPageSeo($link)
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $setting = Setting::first();
         $seo = SeoAssistant::first();
@@ -189,7 +189,7 @@ trait SeoTrait
 
     public function brandSeo($link)
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $brand = Brand::where('link_en', $link)->orwhere('link_ar', $link)->first();
         $configration = Configration::where('lang', $lang)->first();
         $metatags = new MetaTags();
@@ -224,7 +224,7 @@ trait SeoTrait
 
     public function brandsPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $setting = Setting::first();
         $seo = SeoAssistant::first();
@@ -245,7 +245,7 @@ trait SeoTrait
     }
     public function blogSeo($link)
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $blog = BlogItem::where('link_en', $link)->orwhere('link_ar', $link)->first();
         $faqs = Faq::where('type', 'blog_item')->where('blog_item_id', $blog->id)->get();
         $configration = Configration::where('lang', $lang)->first();
@@ -312,7 +312,7 @@ trait SeoTrait
 
     public function projectsPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $setting = Setting::first();
         $seo = SeoAssistant::first();
@@ -334,7 +334,7 @@ trait SeoTrait
 
     public function servicesPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $seo = SeoAssistant::first();
 
@@ -355,7 +355,7 @@ trait SeoTrait
 
     public function projectPageSeo($link)
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $project = Project::where('link_en', $link)->orwhere('link_ar', $link)->first();
         $configration = Configration::where('lang', $lang)->first();
         $metatags = new MetaTags();
@@ -389,7 +389,7 @@ trait SeoTrait
 
     public function galleryImagesPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $seo = SeoAssistant::first();
 
@@ -422,7 +422,7 @@ trait SeoTrait
 
     public function galleryVideosPageSeo()
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $seo = SeoAssistant::first();
 
@@ -455,7 +455,7 @@ trait SeoTrait
 
     public function serviceSeo($link)
     {
-        $lang = \LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale();
         $configration = Configration::where('lang', $lang)->first();
         $faqs = Faq::get();
         $service = Service::where('link_en', $link)->orWhere('link_ar', $link)->first();

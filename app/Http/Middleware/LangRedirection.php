@@ -17,7 +17,7 @@ class LangRedirection
 {
     public function handle(Request $request, Closure $next)
     {
-        $models = ['blog' => BlogItem::class , 'category' => Category::class , 'brand' => Brand::class , 'project' => Project::class , 'service' => Album::class , 'product' => Service::class];
+        $models = config('segmentsmodels.segments');
         $url_model = $request->segment(2);
         $lang = $request->segment(1) ?? Session::get('lang') ??  config('site_lang') ??  App::getlocale();
         App::setLocale($lang);
@@ -31,8 +31,6 @@ class LangRedirection
                     $redirectUrl = url("/$lang/$url_model/{$item->{'link_'.$lang} }");
                     return redirect($redirectUrl);
                 }
-
-
             }
         }
 

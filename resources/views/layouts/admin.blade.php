@@ -30,7 +30,7 @@
     <link href="{{ asset('public/assets/back/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet"
         type="text/css" />
     @if ($lang == 'ar')
-        <link href="{{ asset('public/assets/back/css/css/bootstrap-rtl.min.css') }}" id="bootstrap-style"
+        <link href="{{ asset('public/assets/back/css/bootstrap-rtl.min.css') }}" id="bootstrap-style"
             rel="stylesheet" type="text/css" />
     @endif
     <!-- Icons Css -->
@@ -1031,24 +1031,18 @@
             $(".cart").prop('checked', $(this).prop("checked"));
         });
 
-
+        <?php $last_word = Request::segment(3) ?>
         //// btn_delete single ////
         $(document).on('click', '.btn_delete', function() {
-
             if (!confirm('Are you sure you want to delete the row(s)?')) {
-        return false; // Stop the function if user clicks "Cancel"
-    }
+                    return false; // Stop the function if user clicks "Cancel"
+                }
             var ids = new Set();
-            <?php
-            $last_word = Request::segment(3);
-            Session::put('route', $last_word);
-            ?>
-
             $('.tableChecked:checked').each(function() {
                 ids.add(String($(this).val()));
             });
+
             ids.add(String($(this).data('id')));
-            console.log(ids);
             var idArray = Array.from(ids);
             if (idArray[0] == 'undefined') {
                 alert("Please select at least one checkbox");
@@ -1059,7 +1053,7 @@
                     }
                 });
                 $.ajax({
-                    url: "<?php echo Session::get('route'); ?>/" + idArray,
+                    url:'{{Helper::AppUrl("admin/$last_word")}}/' + idArray,
                     type: 'DELETE',
                     data: {
                         id: idArray
@@ -1080,59 +1074,11 @@
 
         });
 
-        //// btn_delete group ////
-        $(document).on('click', '#btn_delete', function() {
-            if (!confirm('Are you sure you want to delete the row(s)?')) {
-        return false; // Stop the function if user clicks "Cancel"
-    }
-            var id = [];
-            <?php
-            $last_word = Request::segment(3);
-            Session::put('route', $last_word);
-            ?>
-
-            $('.tableChecked:checked').each(function(i) {
-                id[i] = $(this).val();
-            });
-            if (id.length === 0) //tell you if the array is empty
-            {
-                alert("Please Select atleast one checkbox");
-            } else {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "<?php echo Session::get('route'); ?>/" + id,
-                    type: 'DELETE',
-                    data: {
-                        id: id
-                    },
-                    success: function() {
-                        $('#checkAll').prop('checked', false);
-                        for (var i = 0; i < id.length; i++) {
-                            var row = $('tr#' + id[i]);
-                            row.css('background-color', '#ccc');
-                            row.fadeOut('slow');
-                            row.find('input.tableChecked').prop('checked', false);
-                        }
-                        $('#successmesg').text('Selected items were successfully deleted.');
-                        $('#successmesg').css('color','red').fadeIn().delay(3000).fadeOut();
-                    }
-                });
-            }
-
-
-        });
 
         //// btn_active ////
         $(document).on('click', '.btn_active', function() {
             var ids = new Set();
-            <?php
-            $last_word = Request::segment(3);
-            Session::put('route', $last_word);
-            ?>
+
 
             $('.tableChecked:checked').each(function() {
                 ids.add(String($(this).val()));
@@ -1146,7 +1092,7 @@
                 }
             });
             $.ajax({
-                url: "<?php echo Session::get('route'); ?>/up/" + idArray,
+                url: '{{ Helper::AppUrl("admin/$last_word/up") }}/' + idArray,
                 method: 'POST',
                 data: {
                     id: idArray
@@ -1257,7 +1203,7 @@
             $last_word = Request::segment(3);
             Session::put('route', $last_word);
             ?>
-            var routeSegment = "admin/" + "<?php echo Request::segment(3); ?>"; // Assuming the segment containing "admin/projects"
+            var routeSegment = '{{Helper::AppUrl("admin/$last_word")}}'; // Assuming the segment containing "admin/projects"
             var route = "/" + routeSegment + "/deleteAllIMages";
             Swal.fire({
                 title: 'Are you sure?',
