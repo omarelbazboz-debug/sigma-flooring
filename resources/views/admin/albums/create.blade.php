@@ -1,5 +1,7 @@
 @extends('layouts.admin')
+@section('meta')
 <title>{{trans('home.add')}}</title>
+@endsection
 @section('content')
 
 <div class="container-fluid">
@@ -43,12 +45,12 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label class="">{{trans('home.text_en')}}</label>
-                                        <textarea class="form-control ckeditor-classic" name="text_en" type="text" placeholder="{{trans('home.text_en')}}" ></textarea>
+                                        <textarea class="form-control ckeditor-classic" name="text_en" placeholder="{{trans('home.text_en')}}" ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="">{{trans('home.text_ar')}}</label>
-                                        <textarea class="form-control ckeditor-classic" name="text_ar" type="text" placeholder="{{trans('home.text_ar')}}" ></textarea>
+                                        <textarea class="form-control ckeditor-classic" name="text_ar" placeholder="{{trans('home.text_ar')}}" ></textarea>
                                     </div>
 
                                     <div class="col-md-6 mb-3">

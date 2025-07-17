@@ -1,5 +1,8 @@
 @extends('layouts.admin')
+@section('meta')
 <title>{{trans('home.edit')}}</title>
+@endsection
+
 @section('style')
 <style>
     img {
