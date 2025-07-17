@@ -9,7 +9,7 @@
 
 
 @foreach ($contactTitle->take(1) as $title)
-@include('website.section-partials.bredcrmab',['bredImage' => $title->image , 'bredTitle' ,$title->title])
+@include('website.section-partials.bredcrmab',['bredImage' => $title->image , 'bredTitle' =>$title->title])
 @endforeach
 <!-- <======= BreadCrumb ======> -->
 <!--Form-->
