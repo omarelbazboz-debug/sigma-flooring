@@ -8,9 +8,8 @@
 @section('bredcrmab', trans('home.contact-us'))
 
 
-@foreach ($contactTitle as $title)
-@section('bredcrmab', $title->title)
-@include('website.section-partials.bredcrmab')
+@foreach ($contactTitle->take(1) as $title)
+@include('website.section-partials.bredcrmab',['bredImage' => $title->image , 'bredTitle' ,$title->title])
 @endforeach
 <!-- <======= BreadCrumb ======> -->
 <!--Form-->
