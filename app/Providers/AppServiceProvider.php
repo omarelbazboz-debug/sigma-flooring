@@ -95,6 +95,9 @@ class AppServiceProvider extends ServiceProvider
 
                             if ($link) {
                                 $altLangLink = LaravelLocalization::getLocalizedURL($localeCode, $link, [], true);
+                                if ($localeCode === 'ar') {
+                                    $altLangLink = preg_replace('#/ar(/|$)#', '/', $altLangLink);
+                                }
                             }
                             break;
                         }
@@ -139,7 +142,9 @@ class AppServiceProvider extends ServiceProvider
 
                                 if ($link) {
                                     $altLangLink = LaravelLocalization::getLocalizedURL($localeCode, $link, [], true);
-
+                                    if ($localeCode === 'ar') {
+                                        $altLangLink = preg_replace('#/ar(/|$)#', '/', $altLangLink);
+                                    }
                                 }
                             }
                             break;
@@ -153,7 +158,9 @@ class AppServiceProvider extends ServiceProvider
                 foreach ($supportedLocales as $localeCode => $properties) {
                     if (($localeCode == 'ar' && $currentLocale == 'en') || ($localeCode == 'en' && $currentLocale == 'ar')) {
                         $altLangLink = LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
-
+                        if ($localeCode === 'ar') {
+                            $altLangLink = preg_replace('#/ar(/|$)#', '/', $altLangLink);
+                        }
                         $altLangTitle = null;
                         break;
                     }
@@ -165,6 +172,9 @@ class AppServiceProvider extends ServiceProvider
                 'altLangLink' => $altLangLink,
                 'altLangTitle' => $altLangTitle
             ]);
+
+
+
             $setting = Setting::first();
             $seo = SeoAssistant::first();
             $writers = Writer::where('status', 1)->get();
