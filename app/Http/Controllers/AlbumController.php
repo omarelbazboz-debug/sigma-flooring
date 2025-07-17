@@ -36,7 +36,7 @@ class AlbumController extends Controller
             $file = request()->file("image");
             $saveImage = new SaveImageTo3Path($file,true);
             $fileName = $saveImage->saveImages('album_items');
-            $request->name_en = $fileName;
+            $request->image = $fileName;
         }
         $album = Album::create([
             'name_en'=>$request->name_en,
