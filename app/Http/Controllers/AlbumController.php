@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\SaveImageTo3Path;
-use DB;
-use File;
-use Image;
+
 use App\Models\Album;
 use App\Models\AlbumItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class AlbumController extends Controller
@@ -102,7 +102,7 @@ class AlbumController extends Controller
 
         $add->save();
         if($add->type=='images'){
-            if(\Session::has('imagesUpload')){
+            if(Session::has('imagesUpload')){
                 $images =DB::table('temp_upload_files')->where('type','album_items')->get();
                 foreach ($images as $key=>$file) {
                     $img = new AlbumItem();
