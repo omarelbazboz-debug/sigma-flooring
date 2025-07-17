@@ -70,6 +70,101 @@ class AppServiceProvider extends ServiceProvider
         // \URL::forceScheme('https');
 
         view()->composer('*', function ($view) {
+
+            $segments = LaravelLocalization::getNonLocalizedURL(request()->fullUrl());
+            $segments = explode('/', trim(parse_url($segments, PHP_URL_PATH), '/'));
+
+            $currentLocale = LaravelLocalization::getCurrentLocale();
+            $supportedLocales = LaravelLocalization::getSupportedLocales();
+
+            $altLangLink = null;
+            $altLangTitle = null;
+
+            // 1. مقالات بدون /blog في الرابط مثل: /رابط-مباشر
+            if (isset($segments[0]) && !isset($segments[1])) {
+                foreach ($supportedLocales as $localeCode => $properties) {
+                    if (($localeCode == 'ar' && $currentLocale == 'en') || ($localeCode == 'en' && $currentLocale == 'ar')) {
+                        $slug = $segments[0];
+                        $model = BlogItem::where("link_$currentLocale", $slug)->first();
+
+                        if ($model) {
+                            $link = $localeCode === 'ar' ? ($model->link_ar ?? null) : ($model->link_en ?? null);
+                            $altLangTitle = $localeCode === 'ar'
+                                ? ($model->title_ar ?? $model->link_ar)
+                                : ($model->title_en ?? $model->link_en);
+
+                            if ($link) {
+                                $altLangLink = LaravelLocalization::getLocalizedURL($localeCode, $link, [], true);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // 2. روابط فيها نوع زي: /service/slug أو /blog/slug
+            if (!$altLangLink && isset($segments[1]) && isset($segments[2])) {
+                foreach ($supportedLocales as $localeCode => $properties) {
+                    if (($localeCode == 'ar' && $currentLocale == 'en') || ($localeCode == 'en' && $currentLocale == 'ar')) {
+                        $type = $segments[1];
+                        $slug = $segments[2];
+                        $model = $view->getData()[$type] ?? null;
+
+                        if (!$model && in_array($type, ['blog', 'blogs'])) {
+                            $model = BlogItem::where("link_$currentLocale", $slug)->first();
+                        } elseif (!$model && in_array($type, ['service', 'services'])) {
+                            $model = Service::where("link_$currentLocale", $slug)->first();
+                        } elseif (!$model && in_array($type, ['product', 'products'])) {
+                            $model = Project::where("link_$currentLocale", $slug)->first();
+                        }
+
+                        if ($model  && !($model instanceof \Illuminate\Support\Collection) && !is_array($model)) {
+                            $link_ar = $model->link_ar ?? '';
+                            $link_en = $model->link_en ?? '';
+                            $title_ar = $model->title_ar ?? $link_ar;
+                            $title_en = $model->title_en ?? $link_en;
+
+                            // بناء الرابط البديل دائماً بنفس البادئة
+                            if (($localeCode === 'ar' && $link_ar) || ($localeCode === 'en' && $link_en)) {
+                                $link = null;
+                                if (in_array($type, ['blog', 'blogs'])) {
+                                    $link = 'blogs/' . ($localeCode === 'ar' ? $link_ar : $link_en);
+                                } elseif (in_array($type, ['service', 'services'])) {
+                                    $link = 'service/' . ($localeCode === 'ar' ? $link_ar : $link_en);
+                                } elseif (in_array($type, ['product', 'products'])) {
+                                    $link = 'product/' . ($localeCode === 'ar' ? $link_ar : $link_en);
+                                }
+
+                                $altLangTitle = $localeCode === 'ar' ? $title_ar : $title_en;
+
+                                if ($link) {
+                                    $altLangLink = LaravelLocalization::getLocalizedURL($localeCode, $link, [], true);
+
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // 3. fallback في حالة لم يتم إيجاد موديل
+            if (!$altLangLink) {
+                foreach ($supportedLocales as $localeCode => $properties) {
+                    if (($localeCode == 'ar' && $currentLocale == 'en') || ($localeCode == 'en' && $currentLocale == 'ar')) {
+                        $altLangLink = LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
+
+                        $altLangTitle = null;
+                        break;
+                    }
+                }
+            }
+
+            // مشاركة النتيجة مع جميع الـ views
+            view()->share([
+                'altLangLink' => $altLangLink,
+                'altLangTitle' => $altLangTitle
+            ]);
             $setting = Setting::first();
             $seo = SeoAssistant::first();
             $writers = Writer::where('status', 1)->get();
