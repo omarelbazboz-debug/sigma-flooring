@@ -1030,8 +1030,51 @@
         $(".checkAllcart").change(function() {
             $(".cart").prop('checked', $(this).prop("checked"));
         });
-
         <?php $last_word = Request::segment(3) ?>
+
+               //// btn_delete group ////
+        $(document).on('click', '#btn_delete', function() {
+            if (!confirm('Are you sure you want to delete the row(s)?')) {
+        return false; // Stop the function if user clicks "Cancel"
+    }
+            var id = [];
+
+            $('.tableChecked:checked').each(function(i) {
+                id[i] = $(this).val();
+            });
+            if (id.length === 0) //tell you if the array is empty
+            {
+                alert("Please Select atleast one checkbox");
+            } else {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{Helper::AppUrl("admin/$last_word")}}/'+ id,
+                    type: 'DELETE',
+                    data: {
+                        id: id
+                    },
+                    success: function() {
+                        $('#checkAll').prop('checked', false);
+                        for (var i = 0; i < id.length; i++) {
+                            var row = $('tr#' + id[i]);
+                            row.css('background-color', '#ccc');
+                            row.fadeOut('slow');
+                            row.find('input.tableChecked').prop('checked', false);
+                        }
+                        $('#successmesg').text('Selected items were successfully deleted.');
+                        $('#successmesg').css('color','red').fadeIn().delay(3000).fadeOut();
+                    }
+                });
+            }
+
+
+        });
+
+
         //// btn_delete single ////
         $(document).on('click', '.btn_delete', function() {
             if (!confirm('Are you sure you want to delete the row(s)?')) {
