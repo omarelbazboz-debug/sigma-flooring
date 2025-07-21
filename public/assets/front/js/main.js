@@ -4,6 +4,7 @@ $(".hero-slider .owl-carousel").owlCarousel({
   nav: false,
   dots: false,
   margin: 10,
+  rtl:true,
   autoplay: true,
   autoplayTimeout: 5000,
   animateOut: "slideOutLeft", // الخروج إلى اليسار

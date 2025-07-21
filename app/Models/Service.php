@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Facades\Cache;
+use App\Helpers\Helper;
+
 
 class Service extends Model
 {
@@ -48,9 +50,9 @@ class Service extends Model
     {
         $link = '';
         if ($this->haschilds()) {
-            $link = 'products?parent=' . $this->{'link_' . $this->setCurrentLang()};
+            $link = Helper::AppUrl('products?parent=' . $this->{'link_' . $this->setCurrentLang()});
         } else {
-            $link = 'product/' . $this->{'link_' . $this->setCurrentLang()};
+            $link =  Helper::AppUrl('product/' . $this->{'link_' . $this->setCurrentLang()});
         }
         return $link;
     }

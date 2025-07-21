@@ -13,7 +13,7 @@
             ])
     @empty
         @include('website.section-partials.bredcrmab' ,[
-                'bredTitle' => __('home.products'),
+                'bredTitle' => __('home.services'),
                 'bredImage' => $about->banner
             ])
     @endforelse

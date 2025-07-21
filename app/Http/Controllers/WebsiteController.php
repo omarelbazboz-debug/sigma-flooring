@@ -498,13 +498,14 @@ public function getBlogPage($link)
     public function getServiceDetails($link)
     {
         $lang = LaravelLocalization::getCurrentLocale();
-        $service = Service::where('link_en', $link)->orwhere('link_ar', $link)->first();
-        $projects = Project::where('status', 1)->where('service_id', $service->id)->get();
-        $teams = Team::where('lang', $lang)->where('status', 1)->get();
-
+        $service = Service::where('link_en', $link)->orWhere('link_ar', $link)->first();
         if (!$service) {
             abort(404);
         }
+        $projects = Project::where('status', 1)->where('service_id', $service->id)->get();
+        $teams = Team::where('lang', $lang)->where('status', 1)->get();
+
+
         $projects = Project::where('service_id', $service->id)->where('status', 1)->get();
         $subServices = Service::where('parent_id', $service->id)->where('status', 1)->get();
         $blogCategories = BlogCategory::orderBy('id', 'desc')->get();

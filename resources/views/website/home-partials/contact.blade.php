@@ -51,7 +51,7 @@
       </div>
       <div class="row gy-5 gx-4 align-items-center"> <!-- تغيير align-items-center إلى align-items-stretch -->
         <div class="col-lg-6 col-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-          <iframe src="https://www.google.com/maps/embed?" style="border: 0; min-height: 465px; height: 100%;"
+          <iframe src="{{$setting->map_url}}" style="border: 0; min-height: 465px; height: 100%;"
             class="h-100 w-100 rounded-4" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>

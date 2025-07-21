@@ -14,10 +14,10 @@
                 <div class="expertise-highlights mx-auto d-flex flex-column align-items-center px-5 py-3">
 
                     <i class="fa-solid fa-user fs-4"></i>
-                    <span class="counter text-white fs-4 fw-bolder w-auto" data-target="{{ $progresses[0]->number }}"></span>
+                    <span class="counter text-white fs-4 fw-bolder w-auto" data-target="{{ $progresses->first()->number }}"></span>
                 </div>
             </div>
-            <div class="row gx-lg-5 gy-5 text-center text-white mt-2">
+            <div class="row gx-lg-5 gy-5 text-center text-white mt-2 justify-content-center flex-wrap">
                 @foreach ($progresses->slice(2) as $key => $progress)
                     <div class="col-12 col-md-2">
                         <div class=" count d-flex flex-column justify-content-center gap-3 h-100 border-2 p-4">

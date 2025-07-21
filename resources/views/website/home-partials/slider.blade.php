@@ -1,6 +1,9 @@
 @if ($sliders->isNotEmpty())
     <!--================= Slider ================-->
-    <div class="hero-slider">
+    <div class="hero-slider" style="  position: relative;
+  background-image:url({{url('uploads/bg/close-up-details-wood-surface2.webp')}});
+  background-size: cover;
+  background-repeat: no-repeat;">
         <div class="owl-carousel hero owl-theme">
             @foreach ($sliders as $slider)
                 <div class="item">

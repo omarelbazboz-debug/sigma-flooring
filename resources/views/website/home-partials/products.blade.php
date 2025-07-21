@@ -6,7 +6,7 @@
                 <div class="header-text">
                     <h2 class="fw-bold fs-1">
                         <span class="transparent-text">
-                            @lang('home.products')
+                            @lang('home.services')
                         </span>
                     </h2>
                 </div>

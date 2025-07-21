@@ -4,7 +4,7 @@
         <!-- Logo -->
         <div class="logo-wrapper">
             <a class="logo" href="index.html">
-                <img src="img/logo-light.png" class="logo-img" alt="">
+                <img src="img/logo-light.png" class="logo" alt="">
             </a>
             <!-- <a class="logo" href="index.html"> <h2>TRAVOL <span>explore the world</span></h2> </a> -->
         </div>
