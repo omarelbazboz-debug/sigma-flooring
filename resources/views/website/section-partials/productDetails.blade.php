@@ -14,21 +14,9 @@
                     </button>
                 </div>
 
-                <div class="row mt-4">
-                    <!-- الصور المصغرة -->
-                    @foreach ($service->images as  $image)
-                        <div class="col-lg-2 col-4 mb-3 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="thumbnail-item" data-fullimg="{{$image->image}}" data-caption="{{$image->alt_image}}">
-                                <img src="{{$image->image}}" class="w-100 object-fit-cover rounded-3" height="85"
-                                    alt="{{$image->alt_image}}">
-                            </div>
-                        </div>
-
-                    @endforeach
-
-                </div>
+             
             </div>
-
+  
             <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
                 <h2 class="section-title">{{  $service->name }}</h2>
 
@@ -38,8 +26,20 @@
                 </div>
             </div>
         </div>
+ <div class="row my-4">
+                    <!-- الصور المصغرة -->
+                    @foreach ($service->images as  $image)
+                        <div class="col-lg-2 col-4 mb-3 wow fadeInUp" data-wow-delay="0.3s">
+                            <div class="thumbnail-item" data-fullimg="{{$image->image}}" data-caption="{{$image->alt_image}}">
+                                <img src="{{$image->image}}" class="w-100 object-fit-cover rounded-3" height="200"
+                                    alt="{{$image->alt_image}}">
+                            </div>
+                        </div>
 
-        <!-- Product Gallery Section -->
+                    @endforeach
+
+                </div>
+       <!-- Product Gallery Section -->
         <div class="row mb-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="col-12">
                 <h2 class="section-title fw-bold wow fadeInUp" data-wow-delay="0.2s">@lang('home.More products')</h2>
@@ -68,4 +68,5 @@
 
         </div>
     </div>
+     
 </section>

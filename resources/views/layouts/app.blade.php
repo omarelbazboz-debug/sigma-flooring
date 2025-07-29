@@ -17,7 +17,6 @@
     <!-- Header/Navbar -->
     @include('layouts.partials.header')
     @include('layouts.partials.preloader')
-    @include('layouts.partials.header')
     @yield('content')
     @include('layouts.partials.footer')
     @include('layouts.partials.social')

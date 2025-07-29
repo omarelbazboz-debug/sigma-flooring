@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
 :root {
   --main-color: #000000;
   --second-color: #ffffff;
@@ -36,8 +37,12 @@ a {
   text-decoration: none;
   color: inherit;
 }
-body {
-  font-family: "ggSans", sans-serif !important;
+[dir="rtl"] body {
+ font-family: "Cairo", sans-serif !important;
+}
+body{
+    font-family:"ggSans",sans-serif !important;
+
 }
 html,
 body {
@@ -168,6 +173,9 @@ inset-inline-end: 0 !important;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 127px 36px -28px inset;
   transition: 0.3s ease-out;
 }
+.navbar-expand-lg .navbar-nav{
+    margin: 0 auto;
+}
 .home {
   position: relative;
   background-image: url("../images/close-up-details-wood-surface2.webp");
@@ -191,7 +199,9 @@ inset-inline-end: 0 !important;
   background-color: white;
   box-shadow: none;
 }
-
+.navbar-brand img {
+  filter: brightness(100);
+}
 .nav-item {
   position: relative;
 }
@@ -205,7 +215,7 @@ inset-inline-end: 0 !important;
   padding: 12px 12px;
   color:white;
   width: fit-content;
-
+  text-transform: capitalize;
   position: relative;
 }
 .fixed-top .navbar-brand img {
@@ -224,14 +234,14 @@ inset-inline-end: 0 !important;
   list-style: none;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   transition: all 0.3s ease;
   position: relative;
 }
 
 /* تنسيق عناصر القائمة */
 .dropdown-item {
-  padding: 10px 30px;
+  padding: 15px 30px;
   display: block;
   color: #333;
   text-decoration: none;
@@ -240,7 +250,9 @@ inset-inline-end: 0 !important;
 .dropdown-submenu:hover {
   background-color: #f8f9fa;
 }
-
+.submenu-toggle {
+      padding-inline-end: 20px;
+}
 /* الأيقونات */
 .iconToggle {
   transition: transform 0.3s;
@@ -248,6 +260,10 @@ inset-inline-end: 0 !important;
 .iconToggle:nth-child(1) {
   /* transition: transform 0.3s; */
   color: white;
+}
+.fixed-top .iconToggle:nth-child(1) {
+  /* transition: transform 0.3s; */
+  color: black;
 }
 
 .nav-item.dropdown.show .iconToggle,
@@ -260,34 +276,58 @@ inset-inline-end: 0 !important;
   transform: rotate(90deg);
 }
 
-/* المستويات المختلفة للقوائم */
+/* المستوى الأول */
 .first-level {
   background-color: #fff;
-  /* border: 1px solid #eee; */
-  /* width: 250px; */
+  width: fit-content;
   max-height: 0;
-  display: none;
+  opacity: 0;
+  display: block;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  top: 100%;
+ inset-inline-start: 0;
+  z-index: 1000;
+  padding: 0;
 }
 
+/* المستوى الثاني */
 .second-level {
   background-color: #f8f9fa;
-  padding-left: 15px;
+  position: absolute;
+  inset-inline-start: 100%;
+  top: 0;
+  opacity: 0;
   max-height: 0;
-  display: none;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: all 0.3s ease-in-out;
+  z-index: 1001;
 }
 
-/* تأثيرات القوائم المنسدلة */
-.nav-item.dropdown.show .first-level,
+/* إظهار المستوى الأول عند الهوفر */
 .nav-item.dropdown:hover .first-level {
-  max-height: 1000px;
-  display: block;
+  opacity: 1;
+  max-height: 1000px; /* قيمة كبيرة كافية لعرض المحتوى */
+  padding: 10px 0;
 }
 
-.dropdown-submenu.show .second-level,
-.dropdown-submenu:hover .second-level {
+/* إظهار المستوى الثاني بجانب العنصر الفرعي */
+.first-level .dropdown-submenu:hover .second-level {
+  opacity: 1;
   max-height: 1000px;
-  display: block;
 }
+
+/* عنصر القائمة الأساسي */
+.nav-item.dropdown {
+  position: relative;
+}
+
+/* العنصر الفرعي */
+.dropdown-submenu {
+  position: relative;
+}
+
 .nav-item.dropdown:hover {
   display: block;
 }
@@ -367,15 +407,7 @@ inset-inline-end: 0 !important;
   transform: scale(1); /* تكبير الصورة النشطة */
 }
 
-.hero-slider .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* طبقة شبه شفافة */
-  z-index: 1;
-}
+
 .hero .item .overlay {
   position: absolute;
   top: 0;
@@ -390,14 +422,15 @@ inset-inline-end: 0 !important;
   height: 100%;
 }
 
-.hero-slider .text-slider {
+.hero-slider-pages .text-slider {
   position: absolute !important;
   top: 50% !important;
-  inset-inline-start: 50% !important;
+  left: 50% !important;
   z-index: 2 !important;
   transform: translate(-50%, -50%) !important;
+  text-wrap: nowrap;
 }
-.hero-slider .text-slider h1 {
+.hero-slider-pages .text-slider h1 {
   font-size: 4rem;
   color: var(--second-color);
   font-weight: bold !important;
@@ -411,45 +444,17 @@ inset-inline-end: 0 !important;
   color: var(--second-color);
 } */
 
-.hero-slider .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  margin: 0 auto;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 0;
-}
-.hero-slider .slider-content {
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-  z-index: 2;
-  color: white;
-  margin: 0px 120px;
+/*.hero-slider .overlay {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  margin: 0 auto;*/
+/*  height: 100%;*/
+/*  background: rgba(0, 0, 0, 0.4);*/
+/*  z-index: 0;*/
+/*}*/
 
-  transition: all 0.5s;
-}
-.hero-slider .slider-content h1 {
-  color: var(--second-color);
-  margin-bottom: 0;
-  text-transform: uppercase;
-  font-size: 4rem;
-}
-
-.hero-slider .hero-slider-content .btn-about {
-  background-color: var(--main-color);
-  color: var(--third-color);
-  padding: 0.5rem 2rem;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.3s ease-in-out;
-  font-size: 20px;
-}
-.hero-slider .hero-slider-content .btn-about:hover {
-  background-color: var(--fourth-color);
-}
 
 .hero {
   transition: all 0.3s;
@@ -936,7 +941,7 @@ inset-inline-end: 0 !important;
 ##################################################
 */
 footer img {
-  filter: brightness(100);
+  filter: brightness(5);
 }
 @media (max-width: 768px) {
   footer .logo-footer {
@@ -961,73 +966,5 @@ footer .links li a:hover {
 
 /* counter section */
 
-.experience-section {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("../images/close-up-details-wood-surface.webp") center/cover;
-  background-attachment: fixed;
-  padding: 100px 20px;
-  color: white;
-  text-align: center;
-}
 
-.experience-content {
-  max-width: 700px;
-  margin: 0 auto;
-}
 
-.experience-content h2 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.experience-content p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
-}
-
-.first-count .expertise-highlights {
-  width: fit-content;
-}
-
-.count .expertise-highlights {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  flex-wrap: wrap;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  backdrop-filter: blur(5px);
-}
-.count .expertise-highlights .user-count span {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.expertise-highlights {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.expertise-highlights .expertise-highlights-item {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  backdrop-filter: blur(5px);
-}
-
-@media (max-width: 600px) {
-  .experience-content h2 {
-    font-size: 1.8rem;
-  }
-  .expertise-highlights {
-    gap: 10px;
-  }
-}

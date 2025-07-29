@@ -2,7 +2,7 @@
 
 
 
-    <div class="hero-slider hero-slider-pages position-relative " style="height: 60vh; background-image: url({{ $bredImage }})">
+    <div class=" hero-slider-pages position-relative " style="height: 60vh; background-image:url({{url('uploads/bg/close-up-details-wood-surface.webp')}});  background-repeat: no-repeat; background-size: cover; background-position: center center;">
       <div class="text-slider mt-5">
         <h1 class="wow fadeInRight " data-wow-duration="1s">{{ $bredTitle }}</h1>
         <nav aria-label=" ">

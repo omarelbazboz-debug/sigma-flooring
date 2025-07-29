@@ -6,8 +6,8 @@
         data-bs-target="#mobileMenu" aria-controls="mobileMenu">
         <i class="fa-solid fa-bars fs-3 text-white"></i>
     </button>
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+        <ul class="navbar-nav  mb-2 mb-lg-0 gap-4">
             @foreach ($menus as $menu)
                 @if ($menu->type == 'home')
                     <li class="nav-item">
@@ -30,7 +30,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a class="dropdown-item"
                                                 href="{{ $menuService->link }}">{{ $menuService->name }}</a>
-                                            <div class="submenu-toggle pe-3">
+                                            <div class="submenu-toggle">
                                                 <i class="fa-solid fa-chevron-right iconToggle text-black "></i>
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                 @endif
             @endforeach
         </ul>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
+        <ul class="navbar-nav  mb-2 mb-lg-0 gap-4">
             @if ($altLangLink)
                 <li class="nav-item">
                     <a class="btn btn-dark" href="{{ $altLangLink }}">

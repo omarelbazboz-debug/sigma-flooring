@@ -112,9 +112,10 @@
     border: 5px solid;
   }
   .hero-slider .text-slider h1 {
-  text-wrap: nowrap;
+  text-wrap: wrap;
   font-size: 2.8rem !important;
   color: var(--second-color);
+  text-align: center;
   font-weight: bold !important;
 }
 }
@@ -206,4 +207,12 @@ nav .nav-link.active::before {
 .fixed-top .nav-link.active::before {
   background-color: var(--main-color);
 }
+}
+@media (max-width: 600px) {
+  .experience-content h2 {
+    font-size: 1.8rem;
+  }
+  .expertise-highlights {
+    gap: 10px;
+  }
 }

@@ -18,10 +18,12 @@
               class="contact-icon-circle d-flex justify-content-center align-items-center bg-black text-white rounded-circle p-4">
               <i class="fa-solid fa-location-dot fs-5 text-center"></i>
             </span>
+             @foreach($addresses  as $address )
             <a href="{{$firstAddress->map_url}}" class="fw-semibold text-center text-decoration-none"
               target="_blank">
-             {{$firstAddress->address }}
+             {{$address->address }}
             </a>
+            @endforeach
           </div>
         </div>
 
@@ -32,7 +34,9 @@
               class="contact-icon-circle d-flex justify-content-center align-items-center bg-black text-white rounded-circle p-4">
               <i class="fa-solid fa-phone fs-5 text-center"></i>
             </span>
-            <a href="tel:+2{{$setting->mobile}}" class="fw-semibold text-decoration-none">@lang('home.phone') : {{$setting->mobile}}</a>
+             @foreach($phones  as $phone )
+                <a href="tel:+2{{$phone->phone}}" class="fw-semibold text-decoration-none">@lang('home.phone') : {{$phone->phone}}</a>
+             @endforeach
           </div>
         </div>
 
@@ -43,22 +47,33 @@
               class="contact-icon-circle d-flex justify-content-center align-items-center bg-black text-white rounded-circle p-4">
               <i class="fa-solid fa-envelope fs-5 text-center"></i>
             </span>
-            <a href="mailto:infoCairoFinishers@mail.com" class="fw-semibold text-center text-decoration-none">
-              @lang('home.email') : {{$setting->email}}
-            </a>
+    
+                    <a href="mailto:infoCairoFinishers@mail.com" class="fw-semibold text-center text-decoration-none">
+                      @lang('home.email') : {{$setting->email}}
+                    </a>
+                    <a href="mailto:infoCairoFinishers@mail.com" class="fw-semibold text-center text-decoration-none">
+                      @lang('home.email') : {{$setting->contact_email}}
+                    </a>
+                
           </div>
         </div>
       </div>
       <div class="row gy-5 gx-4 align-items-center"> <!-- تغيير align-items-center إلى align-items-stretch -->
-        <div class="col-lg-6 col-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-          <iframe src="{{$setting->map_url}}" style="border: 0; min-height: 465px; height: 100%;"
+       <div class="col-12   wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+            <x-contact-form />
+        </div>
+        @foreach($addresses  as $address )
+          <div class=" col-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+          <iframe src="{{$address->map_url}}" style="border: 0; min-height: 465px; height: 100%;"
             class="h-100 w-100 rounded-4" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+        @endforeach
+        
+        
+      
 
-        <div class="col-12 col-md-12 col-lg-6  wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
-            <x-contact-form />
-        </div>
+        
       </div>
     </div>
   </section>

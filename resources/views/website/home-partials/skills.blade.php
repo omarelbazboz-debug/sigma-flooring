@@ -17,9 +17,9 @@
                     <span class="counter text-white fs-4 fw-bolder w-auto" data-target="{{ $progresses->first()->number }}"></span>
                 </div>
             </div>
-            <div class="row gx-lg-5 gy-5 text-center text-white mt-2 justify-content-center flex-wrap">
-                @foreach ($progresses->slice(2) as $key => $progress)
-                    <div class="col-12 col-md-2">
+            <div class="row gx-xl-5 gx-3 gy-5 text-center text-white mt-2 justify-content-center flex-wrap">
+                @foreach ($progresses->slice(1) as $key => $progress)
+                    <div class="col-12 col-xl-2 col-sm-4">
                         <div class=" count d-flex flex-column justify-content-center gap-3 h-100 border-2 p-4">
                             <div class="expertise-highlights">
                                 <div class="user-count d-flex flex-column  gap-3">
