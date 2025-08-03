@@ -970,7 +970,7 @@ footer .links li a:hover {
 
 
 /* Contact Information */
-#bw-contact-info {position:fixed;bottom:70px;inset-inline-start:50px;width:60px;height:60px;z-index: 999999999999999999999;animation: switch-spin 15.0s ease-in-out infinite;}
+#bw-contact-info {position:fixed;bottom:70px;inset-inline-start: 50px;width:60px;height:60px;z-index: 999999999999999999999;animation: switch-spin 15.0s ease-in-out infinite;}
 #bw-contact-info.btn-call{
     bottom: 150px;
 }
@@ -1037,7 +1037,11 @@ footer .links li a:hover {
 #bw-contact-info > a {width:40px;height:40px;border-radius:50px;font-size:16px;display:flex;align-items:center;justify-content: center;position:absolute;top: calc(50% - 20px);inset-inline-start: calc(50% - 20px);z-index: -1;transition:all 0.25s ease;}
 
 	#bw-contact-info:hover,
-	#bw-contact-info.active {border:40px solid#0000;box-sizing:content-box;inset-inline-start:10px;transform: rotate(313deg) !important;margin-bottom:-50px;}
+	#bw-contact-info.active {border:40px solid#0000;box-sizing:content-box;inset-inline-start: 10px;transform:rotate(50deg) scaleX(-1) !important;margin-bottom:-50px;}
+	[dir="rtl"] 	#bw-contact-info:hover,
+	#bw-contact-info.active {border:40px solid#0000;box-sizing:content-box;inset-inline-start: 10px;transform:rotate(310deg) scaleX(1) !important;margin-bottom:-50px;}
+
+
 #bw-contact-info.btn-call:hover,
 	#bw-contact-info.btn-call.active{
  margin-bottom:20px;
@@ -1049,12 +1053,7 @@ footer .links li a:hover {
 
 
 
-	#bw-contact-info {
-
-		inset-inline-end:calc(50vw - 30px);
-
-		transform:rotate(-20deg);
-	}
+	#bw-contact-info {inset-inline-end:calc(50vw - 30px);transform:rotate(-20deg);}
 
 	#bw-contact-info.active {
 		
