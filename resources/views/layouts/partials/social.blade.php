@@ -20,7 +20,7 @@
 <div id="bw-contact-info">
     @foreach ($phones as $phone)
         <a href="https://wa.me/+2{{ $phone->phone }}" style="background:#25D366;color:#FFF;">
-            <i class="icon fs-14 icon-whatsapp"></i>
+            <i class="icon fs-14 icon-whatsapp"></i>{{ $phone->phone }}
         </a>
     @endforeach
 
@@ -33,11 +33,6 @@
 
     @foreach ($phones as $phone)
         <a href="tel:+2{{ $phone->phone }}" style="background:orange;color:#FFF;">
-
+{{ $phone->phone }}
         </a>
     @endforeach
-
-
-
-
-</div>
