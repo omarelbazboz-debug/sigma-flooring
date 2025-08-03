@@ -18,35 +18,26 @@
 
 
 <div id="bw-contact-info">
-    
-        <a href="https://wa.me/+2{{$setting->whatsapp}}" style="background:#25D366;color:#FFF;">
+    @foreach ($phones as $phone)
+        <a href="https://wa.me/+2{{ $phone->phone }}" style="background:#25D366;color:#FFF;">
             <i class="icon fs-14 icon-whatsapp"></i>
         </a>
-        <a href="https://wa.me/+2{{$setting->whatsapp}}" style="background:#25D366;color:#FFF;">
-            <i class="icon fs-14 icon-whatsapp"></i>
-        </a>
-        <a href="https://wa.me/+2{{$setting->whatsapp}}" style="background:#25D366;color:#FFF;">
-            <i class="icon fs-14 icon-whatsapp"></i>
-        </a>
-       
-     
-    
+    @endforeach
+
+
 </div>
 
 
 
 <div id="bw-contact-info" class="btn-call">
-    
 
-        <a href="tel:+2{{$setting->mobile}}" style="background:orange;color:#FFF;">
-            
+    @foreach ($phones as $phone)
+        <a href="tel:+2{{ $phone->phone }}" style="background:orange;color:#FFF;">
+
         </a>
-        <a href="tel:+2{{$setting->mobile}}" style="background:orange;color:#FFF;">
-            
-        </a>
-        <a href="tel:+2{{$setting->mobile}}" style="background:orange;color:#FFF;">
-            
-        </a>
-        
-    
+    @endforeach
+
+
+
+
 </div>
