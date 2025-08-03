@@ -19,7 +19,7 @@
               <i class="fa-solid fa-location-dot fs-5 text-center"></i>
             </span>
              @foreach($addresses  as $address )
-            <a href="{{$firstAddress->map_url}}" class="fw-semibold text-center text-decoration-none"
+            <a href="{{$address->map_url}}" class="fw-semibold text-center text-decoration-none"
               target="_blank">
              {{$address->address }}
             </a>
@@ -64,7 +64,7 @@
         </div>
         @foreach($addresses  as $address )
           <div class=" col-12 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-          <iframe src="{{$address->map_url}}" style="border: 0; min-height: 465px; height: 100%;"
+          <iframe src="{{$address->link}}" style="border: 0; min-height: 465px; height: 100%;"
             class="h-100 w-100 rounded-4" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>

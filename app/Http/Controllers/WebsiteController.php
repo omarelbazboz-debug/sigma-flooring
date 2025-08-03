@@ -224,6 +224,7 @@ class WebsiteController extends Controller
     ////////////// function saveContact //////////
 public function saveContactUs(Request $request)
     {
+        // dd($request->recaptcha_token);
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
             'secret' => config('services.recaptcha.secret'),
             'response' => $request->input('recaptcha_token'), // <-- هنا التغيير
@@ -248,11 +249,6 @@ public function saveContactUs(Request $request)
             'project_name' => 'nullable|string|max:255',
             'service_id' => 'nullable|exists:services,id',
             'service_name' => 'nullable|string|max:255',
-            'area' => 'nullable|string|max:255',
-            'height' => 'nullable|string|max:255',
-            'number-floors' => 'nullable|string|max:50',
-            'size' => 'nullable|string|max:255',
-            'system' => 'nullable|string|max:100',
         ]);
 
         $contact = new ContactUs();
@@ -265,11 +261,6 @@ public function saveContactUs(Request $request)
         $contact->project_name = $request->project_name;
         $contact->service_id = $request->service_id;
         $contact->service_name = $request->service_name;
-        $contact->area = $request->area;
-        $contact->height = $request->height;
-        $contact->number_floors = $request->{'number-floors'};
-        $contact->size = $request->size;
-        $contact->system = $request->system;
         $contact->save();
 
         $data = [
@@ -303,31 +294,31 @@ public function saveContactUs(Request $request)
             $msg->from(config('mail.from.address'), config('mail.from.name'));
         });
 
-        $formattedData = [
-            [
-                'name' => $contact->name,
-                'email' => $contact->email,
-                'phone' => $contact->phone,
-                'message' => $contact->message,
-                'service' => $contact->service,
-                'project_id' => $contact->project_id,
-                'project_name' => $contact->project_name,
-                'service_id' => $contact->service_id,
-                'service_name' => $contact->service_name,
-                'area' => $contact->area,
-                'height' => $contact->height,
-                'number_floors' => $contact->number_floors,
-                'size' => $contact->size,
-                'system' => $contact->system,
-            ]
-        ];
+        // $formattedData = [
+        //     [
+        //         'name' => $contact->name,
+        //         'email' => $contact->email,
+        //         'phone' => $contact->phone,
+        //         'message' => $contact->message,
+        //         'service' => $contact->service,
+        //         'project_id' => $contact->project_id,
+        //         'project_name' => $contact->project_name,
+        //         'service_id' => $contact->service_id,
+        //         'service_name' => $contact->service_name,
+        //         'area' => $contact->area,
+        //         'height' => $contact->height,
+        //         'number_floors' => $contact->number_floors,
+        //         'size' => $contact->size,
+        //         'system' => $contact->system,
+        //     ]
+        // ];
 
-        $sheetResponse = Http::asJson()->post('#', ['data' => $formattedData]);
+        // $sheetResponse = Http::asJson()->post('#', ['data' => $formattedData]);
 
-        if ($sheetResponse->failed()) {
-            dd($sheetResponse->body()); // عرض محتوى الاستجابة
-            return back()->withErrors(['error' => 'Failed to send data to SheetDB.']);
-        }
+        // if ($sheetResponse->failed()) {
+        //     dd($sheetResponse->body()); // عرض محتوى الاستجابة
+        //     return back()->withErrors(['error' => 'Failed to send data to SheetDB.']);
+        // }
 
         return back()->with(['contact_message' => trans('home.Thank you for contacting us. A customer service officer will contact you soon')]);
     }

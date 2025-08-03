@@ -33,4 +33,14 @@
         </script>
 
 
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('{{ env('RECAPTCHA_SITEKEY') }}', {action: 'contact'}).then(function (token) {
+            document.getElementById('recaptcha_token').value = token;
+        });
+    });
+</script>
+
+
+
 @yield('script')

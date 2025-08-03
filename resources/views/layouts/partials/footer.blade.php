@@ -42,7 +42,7 @@
               <ul class="list-unstyled quick-info links d-flex flex-column gap-2">
                 <li class="email"><a href=""><i class="fa-solid fa-envelope me-2"></i> {{ $setting->email }} </a></li>
                 <li class="phone"> <a href="tel:01123456789"><i class="fa-solid fa-phone me-2"></i> {{$setting->mobile}} </a> </li>
-                <li class="address"><a href="#"><i class="fa-solid fa-location-dot me-2 "></i> {{ $addresses->first()?->address }}</a></li>
+                <li class="address"><a href="{{ $addresses->first()?->map_url }}" target="_blank" ><i class="fa-solid fa-location-dot me-2 "></i> {{ $addresses->first()?->address }}</a></li>
               </ul>
             </div>
           </div>

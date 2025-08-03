@@ -12,6 +12,7 @@
 
   <form action="{{ Helper::AppUrl('save/contact-us') }}" method="post" class="row g-lg-3 gx-1 gy-4 py-3 px-2  shadow-lg rounded-4 h-100 ">
     @csrf
+    <input type="hidden" name="recaptcha_token" id="recaptcha_token">
             <div class="col-md-6">
 
               <input type="text" class="form-control py-2" placeholder="{{ trans('home.name') }}" name="name">
@@ -38,3 +39,5 @@
 
 
           </form>
+
+
