@@ -86,6 +86,7 @@
                                     <input type="color" class="form-control" name="name_color"
                                         value="{{ $service->name_color ?? '#000000' }}">
                                 </div>
+                                
                                 <div class="form-group col-md-5">
                                     <label for="helperText">{{ trans('home.parent') }}</label>
                                     <select class="form-control" data-trigger name="parent_id" required>
@@ -100,13 +101,16 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <div class="col-md-5 mb-3">
-                                    <label for="youtube_link">{{ trans('home.youtube_link') }}</label>
-                                    <input type="text" class="form-control"
-                                        placeholder="{{ trans('home.youtube_link') }}" name="youtube_link"
-                                        value="{{ $service->youtube_link }}">
+                                 <div class="col-md-5 mb-3">
+                                    <label for="helperText">{{trans('home.album_for')}}</label>
+                                    <select class="form-control" data-trigger name="album_for" required>
+                                        <option value="0">{{trans('home.not_album')}}</option>
+                                        @foreach($services as $serv)
+                                            <option value="{{$serv->id}}"  {{ $serv->id == $service->album_for ? 'selected' : '' }}>{{(app()->getLocale() == 'en')?$serv->name_en:$serv->name_ar}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                
 
                                 <div class="col-md-2 mb-3">
                                     <label for="order">{{ trans('home.order') }}</label>
@@ -114,7 +118,12 @@
                                         placeholder="{{ trans('home.order') }}" name="order"
                                         value="{{ $service->order }}">
                                 </div>
-
+                                <div class="col-md-15 mb-3">
+                                    <label for="youtube_link">{{ trans('home.youtube_link') }}</label>
+                                    <input type="text" class="form-control"
+                                        placeholder="{{ trans('home.youtube_link') }}" name="youtube_link"
+                                        value="{{ $service->youtube_link }}">
+                                </div>
                                 <div class="col-md-6 mb-3 mt-3">
                                     <label for="formFile" class="form-label">{{ trans('home.choose_image') }}</label>
                                     <input class="form-control" type="file" id="formFile" name="img">

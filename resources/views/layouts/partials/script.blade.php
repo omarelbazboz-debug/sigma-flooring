@@ -9,25 +9,15 @@
       new WOW().init();
     </script>
      <script src="{{Helper::getFrontPath('js/fancybox.umd.js')}}"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
 
-                document.querySelectorAll('.thumbnail-item').forEach(item => {
-                    item.addEventListener('click', function () {
-                        const mainImg = document.getElementById('mainHDFImage');
-                        mainImg.src = this.dataset.fullimg;
-                    });
-                });
-
-                document.getElementById('zoomBtn').addEventListener('click', function () {
-                    const currentImg = document.getElementById('mainHDFImage');
-                    Fancybox.show([{
-                        src: this.dataset.fullimg || currentImg.src,
-                        caption: this.dataset.caption || currentImg.alt
-                    }]);
-                });
-            });
-        </script>
+ <script>
+        Fancybox.bind("[data-fancybox]", {
+            caption: (fancybox, slide) => {
+                const caption = slide.caption || "";
+            },
+        });
+    </script>
+         
         <script>
            new WOW().init();
         </script>

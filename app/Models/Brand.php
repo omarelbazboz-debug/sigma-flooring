@@ -25,7 +25,7 @@ class Brand extends Model
         if ($this->attributes['logo']) {
             return asset('uploads/brands/source/' . $this->attributes['logo']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
 }

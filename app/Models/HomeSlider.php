@@ -21,7 +21,7 @@ class HomeSlider extends Model
         if ($this->attributes['image']) {
             return asset('uploads/sliders/home-sliders/source/' . $this->attributes['image']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     protected static function booted()

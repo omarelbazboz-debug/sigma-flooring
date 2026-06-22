@@ -33,16 +33,24 @@
                                 @csrf
 
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-4 mb-3">
                                         <label>{{ trans('home.name_en') }}</label>
                                         <input class="form-control" name="name_en" type="text" placeholder="{{ trans('home.name_en') }}" required>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-4 mb-3">
                                         <label>{{ trans('home.name_ar') }}</label>
                                         <input class="form-control" name="name_ar" type="text" placeholder="{{ trans('home.name_ar') }}" required>
                                     </div>
-
+                                      <div class="col-md-4 mb-3">
+                                        <label for="parent">{{trans('home.parent')}}</label>
+                                        <select class="form-control" data-trigger name="parent_id">
+                                            <option value="0">{{trans('home.no_parent')}}</option>
+                                            @foreach($albums as $album)
+                                            <option value="{{$album->id}}" >{{(app()->getLocale()=='en')? $album->name_en:$album->name_ar}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="">{{trans('home.text_en')}}</label>
                                         <textarea class="form-control ckeditor-classic" name="text_en" placeholder="{{trans('home.text_en')}}" ></textarea>

@@ -55,7 +55,7 @@ class BlogItem extends Model
         }
 
         // Return a default image if the 'image' column is empty or null
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     protected static function booted()
     {

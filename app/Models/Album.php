@@ -21,6 +21,15 @@ class Album extends Model
     public function images(){
         return $this->hasMany(AlbumItem::class,'album_id');
     }
+    
+    
+    public function parent(){
+        return $this->belongsTo(Album::class,'parent_id');
+    }
+    
+    public function children(){
+        return $this->hasMany(Album::class,'parent_id');
+    }
 
     public function firstImage(){
         return AlbumItem::where('album_id',$this->id)->first();
@@ -45,7 +54,7 @@ class Album extends Model
                 if ($this->attributes['image']) {
                     return asset('uploads/album_items/source/' . $this->attributes['image']);
                 }
-                return asset('assets/back/images/noimage.jpg');
+                return asset('public/assets/back/images/noimage.jpg');
             }
 
 

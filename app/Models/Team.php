@@ -19,7 +19,7 @@ class Team extends Model
         if ($this->attributes['img']) {
             return asset('uploads/teams/source/' . $this->attributes['img']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     public function getNameAttribute()
     {

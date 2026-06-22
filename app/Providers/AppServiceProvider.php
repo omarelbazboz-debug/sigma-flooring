@@ -81,22 +81,17 @@ class AppServiceProvider extends ServiceProvider
             App::setlocale($lang);
             $blogCategories = BlogCategory::orderBy('id', 'desc')->get();
             $configration = Configration::where('lang', $lang)->first();
-            $services = Cache::remember('services_' . $lang, 60 * 24, function () {
-                return Service::where('menu', 1)->where('status', 1)->where('parent_id', 0)->orderBy('order', 'ASC')->take(6)->get();
-            });
-            $menuServices = Cache::remember('menuServices_' . $lang, 60 * 24, function () {
-                return Service::where('status', 1)->where('parent_id', 0)->orderBy('order', 'ASC')->take(6)->get();
-            });
-            $blogs = Cache::remember('blogs_' . $lang, 60 * 24, function () {
-                return BlogItem::where('status', 1)->orderBy('order', 'ASC')->get();
-            });
-            $menus = Cache::remember('menus_' . $lang, 60 * 24, function () use ($menuServices) {
-                $menus = MenuItem::where('status', 1)->where('parent_id', 0)->orderBy('order', 'ASC')->get();
-                return MenuHelper::prepareMenus($menus, $menuServices);
-            });
+            $services =  Service::where('menu', 1)->where('status', 1)->where('parent_id', 0)->where('album_for',0)->orderBy('order', 'ASC')->take(6)->get();
+
+            $menuServices =  Service::where('status', 1)->where('parent_id', 0)->where('album_for',0)->orderBy('order', 'ASC')->take(6)->get();
+          
+            $blogs = BlogItem::where('status', 1)->orderBy('order', 'ASC')->get();
+            $menuss = MenuItem::where('status', 1)->where('parent_id', 0)->orderBy('order', 'ASC')->get();
+            $menus =  MenuHelper::prepareMenus($menuss, $menuServices);
+           
             $footerMenus = MenuItem::where('menu_id', 2)->where('status', 1)->where('parent_id', 0)->orderBy('order', 'ASC')->get();
             $pages = Page::where('status', 1)->get();
-            $albums = Album::where('status', 1)->get();
+            $albums = Album::where('status', 1)->where('parent_id',0)->get();
             $galleryImages = GalleryImage::where('status', 1)->orderBy('order', 'asc')->take(6)->get();
             $projects = Project::where('status', 1)->where('recommended', 1)->get();
             $sliders = Cache::remember('sliders_' . $lang, 60 * 24, function () use ($lang) {

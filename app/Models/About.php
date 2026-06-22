@@ -45,7 +45,7 @@ class About extends Model
         }
 
         // Return a default image if the 'image' column is empty or null
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     public function getImgAttribute()
     {
@@ -55,7 +55,7 @@ class About extends Model
         }
 
         // Return a default image if the 'image' column is empty or null
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     public function getBannerAttribute()
     {
@@ -65,7 +65,7 @@ class About extends Model
         }
 
         // Return a default image if the 'image' column is empty or null
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
         public function getLinkAttribute()

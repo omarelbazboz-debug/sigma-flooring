@@ -457,7 +457,7 @@ public function getBlogPage($link)
     ////////// function return list of published services/////
     public function getservices()
     {
-        $services = Service::where('status', 1)->orderBy('order');
+        $services = Service::where('status', 1)->where('album_for',0)->orderBy('order');
         if($parent_link = request('parent')){
             $parentService = Service::where('link_en', $parent_link)->orWhere('link_ar', $parent_link)->first();
             if (!$parentService) {
@@ -505,7 +505,7 @@ public function getBlogPage($link)
         if ($service) {
             $faqs = Faq::where('type', 'service')->where('service_id', $service->id)->get();
             $related_services = Service::where('parent_id', 0)->where('status', 1)
-            ->orderBy('order')->whereNot('id',$service->id)->whereDoesntHave('childs')
+            ->where('album_for',0)->orderBy('order')->whereNot('id',$service->id)->whereDoesntHave('childs')
             ->get();
             $blogCategories = BlogCategory::orderBy('id', 'desc')->get();
             $projects = Project::where('status', 1)->get();
@@ -811,7 +811,7 @@ public function profile()
 public function album()
 {
     $setting = Setting::first();
-    $albums = Album::where('status', 1)->get();
+    $albums = Album::where('status', 1)->where('parent_id',0)->with(['children'])->get();
     list($schema, $metatags) = $this->contactUsPageSeo();
 
     $albumDetails = null;
@@ -826,7 +826,7 @@ public function albumDetails($link)
 {
     $setting = Setting::first();
     $album = Album::with('images')->where('link_en', $link)
-        ->orWhere('link_ar', $link)->firstOrFail();
+        ->orWhere('link_ar', $link)->with(['children'])->firstOrFail();
     list($schema, $metatags) = $this->contactUsPageSeo();
     return view('website.service-details', compact('setting', 'album', 'metatags', 'schema'));
 }

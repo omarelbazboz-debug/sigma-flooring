@@ -26,7 +26,8 @@ class AlbumController extends Controller
     }
 
      public function create(){
-        return view('admin.albums.create');
+        $data['albums'] = Album::where('status', 1)->where('parent_id',0)->get();
+        return view('admin.albums.create',$data);
     }
 
     public function store(Request $request){
@@ -47,6 +48,8 @@ class AlbumController extends Controller
             'type'=>$request->type,
             'link_en'=>$request->link_en?preg_replace("/[ \/]/", "-", $request->link_en):preg_replace("/[ \/]/", "-", $request->name_en),
             'link_ar'=>$request->link_ar?preg_replace("/[ \/]/", "-", $request->link_ar):preg_replace("/[ \/]/", "-", $request->name_ar),
+            'parent_id'=>$request->status,
+
 
             ]);
 
@@ -66,6 +69,7 @@ class AlbumController extends Controller
 
     public function edit($id){
         $album=Album::find($id);
+          $data['albums'] = Album::where('status', 1)->where('parent_id',0)->whereNot('id' ,$id)->get();
          if($album->type=="images")
             {
                  return view('admin.albums.edit',compact('album'));
@@ -83,6 +87,8 @@ class AlbumController extends Controller
         $add->text_ar = $request->text_ar;
         $add->link_en = $request->link_en?preg_replace("/[ \/]/", "-", $request->link_en):preg_replace("/[ \/]/", "-", $request->name_en);
         $add->link_ar = $request->link_ar?preg_replace("/[ \/]/", "-", $request->link_ar):preg_replace("/[ \/]/", "-", $request->name_ar);
+        $add->parent_id = $request->parent_id;
+
 
 
         if($request->status){
@@ -99,7 +105,7 @@ class AlbumController extends Controller
             SaveImageTo3Path::deleteImage(  $add->image, 'album_items');
             $add->image = $fileName;
         }
-
+        
         $add->save();
         if($add->type=='images'){
             if(Session::has('imagesUpload')){

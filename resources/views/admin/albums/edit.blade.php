@@ -53,26 +53,26 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-4 mb-3">
                                         <label class="">{{trans('home.name_en')}}</label>
                                         <input class="form-control" name="name_en" type="text" placeholder="{{trans('home.name_en')}}" value="{{$album->name_en}}" required>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-4 mb-3">
                                         <label class="">{{trans('home.name_ar')}}</label>
                                         <input class="form-control" name="name_ar" type="text" placeholder="{{trans('home.name_ar')}}" value="{{$album->name_ar}}" required>
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="">{{trans('home.text_en')}}</label>
-                                        <textarea class="form-control ckeditor-classic" name="text_en"  placeholder="{{trans('home.text_en')}}" >{{$album->text_en}}</textarea>
+              
+                                    <div class="col-md-4 mb-3">
+                                        <label for="parent">{{trans('home.parent')}}</label>
+                                        <select class="form-control" data-trigger name="parent_id" style="position: relative; z-index: 10000000;">
+                                            <option value="0">{{trans('home.no_parent')}}</option>
+                                            @foreach($albums as $albumitem)
+                                            <option value="{{$albumitem->id}}" {{($albumitem->id == $album->parent_id)?'selected':''}}>{{(app()->getLocale()=='en')? $albumitem->name_en:$albumitem->name_ar}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="">{{trans('home.text_ar')}}</label>
-                                        <textarea class="form-control ckeditor-classic" name="text_ar"  placeholder="{{trans('home.text_ar')}}" >{{$album->text_ar}}</textarea>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
+                                      <div class="col-md-6 mb-3">
                                         <label for="formFile" class="form-label">{{ trans('home.choose_image') }}</label>
                                         <input class="form-control" type="file" id="formFile" name="image">
                                     </div>
@@ -85,6 +85,16 @@
                                         <img src="{{asset('assets/back/images/noimage.jpg')}}" width="70">
                                     </div>
                                     @endif
+                                    <div class="col-md-6 mb-3">
+                                        <label class="">{{trans('home.text_en')}}</label>
+                                        <textarea class="form-control ckeditor-classic" name="text_en"  placeholder="{{trans('home.text_en')}}" >{{$album->text_en}}</textarea>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="">{{trans('home.text_ar')}}</label>
+                                        <textarea class="form-control ckeditor-classic" name="text_ar"  placeholder="{{trans('home.text_ar')}}" >{{$album->text_ar}}</textarea>
+                                    </div>
+                                  
 
                                     <div class="form-group col-md-12">
                                         <hr>

@@ -18,6 +18,6 @@ class Testimonial extends Model
         if ($this->attributes['img']) {
             return asset('uploads/testimonials/source/' . $this->attributes['img']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 }

@@ -16,6 +16,6 @@ class ServiceImage extends Model
         if ($this->attributes['image']) {
             return asset('uploads/services/source/' . $this->attributes['image']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 }

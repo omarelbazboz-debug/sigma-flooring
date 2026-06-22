@@ -18,7 +18,7 @@
             <div class="widget mt-4 d-none">
               <ul class="list-unstyled social d-flex gap-3">
                 <li>
-                    <a href="http://wa.me/01148888024" target="_blank"><i class="fa-brands fa-whatsapp fs-4"></i></a>
+                    <a href="http://wa.me/2{{ $setting->whatsapp }}" target="_blank"><i class="fa-brands fa-whatsapp fs-4"></i></a>
                 </li>
               </ul>
             </div>
@@ -40,8 +40,8 @@
             <div class="widget">
               <h3 class="heading text-white">@lang('home.contact-us')</h3>
               <ul class="list-unstyled quick-info links d-flex flex-column gap-2">
-                <li class="email"><a href=""><i class="fa-solid fa-envelope me-2"></i> {{ $setting->email }} </a></li>
-                <li class="phone"> <a href="tel:01123456789"><i class="fa-solid fa-phone me-2"></i> {{$setting->mobile}} </a> </li>
+                <li class="email"><a href="mailto:{{ $setting->email }}"><i class="fa-solid fa-envelope me-2"></i> {{ $setting->email }} </a></li>
+                <li class="phone"> <a href="tel:2{{$setting->mobile}}"><i class="fa-solid fa-phone me-2"></i> {{$setting->mobile}} </a> </li>
                 <li class="address"><a href="{{ $addresses->first()?->map_url }}" target="_blank" ><i class="fa-solid fa-location-dot me-2 "></i> {{ $addresses->first()?->address }}</a></li>
               </ul>
             </div>

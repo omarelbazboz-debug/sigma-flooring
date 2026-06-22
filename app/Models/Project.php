@@ -8,7 +8,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 class Project extends Model
 {
     protected $guarded = [];
-    protected static $defaultImage = 'resources/assets/back/images/noimage.jpg';
+    protected static $defaultImage = 'public/assets/back/images/noimage.jpg';
     protected $currentLang;
 
     public static function setCurrentLang()
@@ -99,28 +99,28 @@ public function features()
         if ($this->attributes['image']) {
             return asset('uploads/projects/source/' . $this->attributes['image']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     public function getImgAttribute()
     {
         if ($this->attributes['img']) {
             return asset('uploads/projects/source/' . $this->attributes['img']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     public function getPhotoAttribute()
     {
         if ($this->attributes['photo']) {
             return asset('uploads/projects/source/' . $this->attributes['photo']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
     public function getBannerAttribute()
     {
         if ($this->attributes['banner']) {
             return asset('uploads/projects/source/' . $this->attributes['banner']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     public function getFileAttribute()

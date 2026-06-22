@@ -13,7 +13,7 @@
         "endroid/qr-code": "^5.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
-        "laravel/framework": "10.48.29",
+        "laravel/framework": "^10.48.29",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",

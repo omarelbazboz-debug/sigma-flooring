@@ -32,7 +32,7 @@ class ServiceController extends Controller
     public function create()
     {
         //
-        $services = Service::get();
+        $services = Service::where('album_for',0)->get();
         return view('admin.services.addService', compact('services'));
     }
 
@@ -76,6 +76,7 @@ class ServiceController extends Controller
         $add->home = $request->home;
         $add->menu = $request->menu;
         $add->parent_id = $request->parent_id ?? 0;
+        $add->album_for = $request->album_for ?? 0;
         if ( $request->hasFile("img")) {
             $file = $request->file("img");
             $saveImage = new SaveImageTo3Path($file,true);
@@ -108,7 +109,7 @@ class ServiceController extends Controller
 
         $add->save();
 
-
+        if(request('album_for')) {return   redirect("admin/services/{$add->id}/edit")->with('success', trans('home.your_item_added_successfully'));}
         return redirect('admin/services')->with('success', trans('home.your_item_added_successfully'));
     }
 
@@ -121,7 +122,7 @@ class ServiceController extends Controller
         $service = Service::find($id);
         if ($service) {
             $questions = Faq::where('type', 'service')->where('service_id', $id)->get();
-            $services = Service::get();
+            $services = Service::whereNot('id' ,$id)->where('album_for',0)->get();
 
             $images = DB::table('temp_upload_files')->where('type', 'service')->where('service_id', $id)->get();
             if ($images->count() > 0) {
@@ -190,6 +191,8 @@ class ServiceController extends Controller
         $add->home = $request->home;
         $add->menu = $request->menu;
         $add->parent_id = $request->parent_id ?? 0;
+        $add->album_for = $request->album_for ?? 0;
+
 
         if ( $request->hasFile("img")) {
             $file = $request->file("img");

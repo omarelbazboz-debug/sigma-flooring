@@ -13,6 +13,6 @@ class ProjectImage extends Model
     {
         return $this->image 
             ? asset('uploads/projects/source/' . $this->image) 
-            : asset('assets/back/images/noimage.jpg'); // صورة افتراضية إذا لم تكن الصورة موجودة
+            : asset('public/assets/back/images/noimage.jpg'); // صورة افتراضية إذا لم تكن الصورة موجودة
     }
 }

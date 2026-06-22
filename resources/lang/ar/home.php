@@ -1,7 +1,9 @@
 <?php
 
 return array(
-    'Link_Video'=>'Link Video',
+    'Link_Video'=>'رابط الفيديو',
+      'album_for'=>'البوم لخدمة',
+    'not_album'=>'ليست البوم',
     'edit_album'=>'تعديل الخدمة',
     'albums'=>'البومات',
     'brands'=>'ماركات',

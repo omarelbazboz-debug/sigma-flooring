@@ -48,10 +48,10 @@
               <i class="fa-solid fa-envelope fs-5 text-center"></i>
             </span>
     
-                    <a href="mailto:infoCairoFinishers@mail.com" class="fw-semibold text-center text-decoration-none">
+                    <a href="mailto:{{$setting->email}}" class="fw-semibold text-center text-decoration-none">
                       @lang('home.email') : {{$setting->email}}
                     </a>
-                    <a href="mailto:infoCairoFinishers@mail.com" class="fw-semibold text-center text-decoration-none">
+                    <a href="mailto:{{$setting->contact_email}}" class="fw-semibold text-center text-decoration-none">
                       @lang('home.email') : {{$setting->contact_email}}
                     </a>
                 

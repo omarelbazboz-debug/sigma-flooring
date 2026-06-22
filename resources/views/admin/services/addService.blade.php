@@ -71,6 +71,16 @@
                                         <label for="order">{{trans('home.order')}}</label>
                                         <input type="number" min="0" class="form-control" placeholder="{{trans('home.order')}}" name="order">
                                     </div>
+                                    
+                                     <div class="col-md-4 mb-3">
+                                        <label for="helperText">{{trans('home.album_for')}}</label>
+                                        <select class="form-control" data-trigger name="album_for" required>
+                                            <option value="0">{{trans('home.not_album')}}</option>
+                                            @foreach($services as $serv)
+                                                <option value="{{$serv->id}}">{{(app()->getLocale() == 'en')?$serv->name_en:$serv->name_ar}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
                                     <div class="col-md-8 mb-3 mt-3">
                                         <label for="formFile" class="form-label">{{ trans('home.choose_image') }}</label>

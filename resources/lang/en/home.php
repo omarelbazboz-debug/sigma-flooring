@@ -4,6 +4,9 @@ return array (
   'Link_Video'=>'Link Video',
 
   'edit_album'=>'Edit service',
+  'album_for'=>'Album For',
+    'not_album'=>'Not Album',
+
   'configurations_updated_successfully'=>'configurations updated successfully',
   'albums'=>'services',
   'brands'=>'brands',

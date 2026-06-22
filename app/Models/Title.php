@@ -69,7 +69,7 @@ class Title extends Model
         if ($this->attributes['image']) {
             return asset('uploads/titles/source/' . $this->attributes['image']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     public static function Section($type)

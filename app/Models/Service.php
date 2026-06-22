@@ -32,6 +32,20 @@ class Service extends Model
         return $this->hasMany(Service::class, 'parent_id')->where('status', 1)->orderBy('order', 'asc');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Service::class, 'parent_id') ;
+    }
+    
+    public function albumForService()
+    {
+        return $this->belongsTo(Service::class, 'album_for');
+    }
+    
+    public function albums()
+    {
+        return $this->hasMany(Service::class, 'album_for')->where('status', 1)->orderBy('order', 'asc');
+    }
     public function haschilds()
     {
         return $this->childs->isNotEmpty();
@@ -77,7 +91,7 @@ class Service extends Model
         if ($this->attributes['img']) {
             return asset('uploads/services/source/' . $this->attributes['img']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     public function getIconAttribute()
@@ -85,7 +99,7 @@ class Service extends Model
         if ($this->attributes['icon']) {
             return asset('uploads/services/source/' . $this->attributes['icon']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     public function getBannerAttribute()
@@ -93,7 +107,7 @@ class Service extends Model
         if ($this->attributes['banner']) {
             return asset('uploads/services/source/' . $this->attributes['banner']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     public function getFileAttribute()
@@ -101,7 +115,7 @@ class Service extends Model
         if ($this->attributes['file']) {
             return asset('uploads/services/pdfs/' . $this->attributes['file']);
         }
-        return asset('assets/back/images/noimage.jpg');
+        return asset('public/assets/back/images/noimage.jpg');
     }
 
     protected static function booted()

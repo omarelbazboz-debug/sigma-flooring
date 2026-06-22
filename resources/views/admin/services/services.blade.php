@@ -50,6 +50,8 @@
                                 <th>{{ trans('home.name_ar') }}</th>
                                 <th>{{ trans('home.order') }}</th>
                                 <th>{{ trans('Parent Name') }}</th>
+                                <th>{{ trans('album_for') }}</th>
+
                                 <th>{{ trans('home.image') }}</th>
                                 <th>{{ __('home.publish/unpublish') }}</th>
                                 <th>{{ __('home.edit') }}</th>
@@ -70,16 +72,9 @@
                                     <td><a>{{ $service->name_en }}</a></td>
                                     <td><a>{{ $service->name_ar }}</a></td>
                                     <td><a>{{ $service->order }}</a></td>
-                                    <td>
-                                        <select class="form-control" data-trigger name="parent_id" id="parentSelect" required>
-                                            <option value="0" {{($service->parent_id == 0)?'selected':''}}>{{trans('home.no_parent')}}</option>
-                                            @foreach($services as $serv)
-                                                <option value="{{$serv->id}}" {{($serv->id == $service->parent_id) ? 'selected' : ''}}>
-                                                    {{(app()->getLocale() == 'en') ? $serv->name_en : $serv->name_ar}}
-                                                </option>
-                                            @endforeach
-                                        </select>                                                                            
-                                    </td>
+                                    <td><a>{{ $service->parent?->name ?? __('home.no_parent') }}</a> </td>
+                                   
+                                    <td><a>{{ $service->albumForService?->name  ?? __('home.not_album') }}</a> </td>
                                     <td>
                                         @if ($service->img)
                                             <img src="{{ $service->img }}"
